@@ -34,6 +34,31 @@ class Tent(FloatLayout):
     s1_confidence = StringProperty()
     s2_confidence = StringProperty()
 
+    def login(self, email, password):
+        payload = urllib.urlencode({'email': email, 'password': password})
+        endpoint = "http://calwatson.herokuapp.com/question"
+        headers = {'Content-type': 'application/x-www-form-urlencoded', 'Accept': 'text/plain'}
+        r = UrlRequest(endpoint, req_body=payload, req_headers=headers,debug=True)
+        r.wait()
+        try:
+            auth_token = r.result['auth_token']
+            my_token = auth_token
+        except:
+            # not able to find user
+        return auth_token
+
+    def get_last_five_queries(self, token):
+        payload = urllib.urlencode({'token': token})
+        endpoint = "http://calwatson.herokuapp.com/users/last_requests"
+        headers = {'Content-type': 'application/x-www-form-urlencoded', 'Accept': 'text/plain'}
+        r = UrlRequest(endpoint, req_body=payload, req_headers=headers,debug=True)
+        r.wait()
+        try:
+            last_queries = r.result['answers']
+        except:
+            # not able to find auth token
+        return last_queries
+
     def query(self, term):
 
         payload = urllib.urlencode({'question': "{0}".format(term), 'token': my_token})
