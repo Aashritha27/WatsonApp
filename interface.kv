@@ -1,0 +1,136 @@
+<Tent>:
+    searchTerm: _searchTerm
+    AnchorLayout:
+        anchor_x: 'center'
+        anchor_y: 'top'
+        ScreenManager:
+            id: manager
+            Screen:
+                name: 'landing'
+                FloatLayout:
+                    canvas.before:
+                        Color:
+                            rgb: (0.952941176   ,0.949019608,0.933333333)
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+
+                    Label:
+                        font_name: 'timeburner_regular.ttf'
+                        color: (0,0,0, 1)
+                        pos_hint: {'x': 0, 'y': 0.4}
+                        text: 'What, son?'
+                        font_size: '55dp'
+
+                    Label:
+                        color: (0,0,0, 1)
+                        pos_hint: {'x': 0, 'y': 0.3}
+                        text: 'Ask dad a question.'
+                        font_size: '15dp'
+
+                    Image:
+                        source: 'brain.png'
+                        pos_hint: {'x': 0.3, 'y': 0.3}
+                        size_hint: (0.4, 0.4)
+                        allow_stretch: True
+
+                    Button:
+                        background_color:  (0.364705882,0.637254902,0.823529412,1)
+                        background_normal: ''
+                        size_hint: (1, 0.05)
+                        pos_hint: {'x': 0, 'y': 0}
+                        text: 'Get started'
+                        on_release: manager.current = 'analysis'
+
+            Screen:
+                name: 'analysis'
+                FloatLayout:
+                    rows: 15
+                    canvas.before:
+                        Color:
+                            rgb: (0.952941176,0.949019608,0.933333333)
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+
+                    Label:
+                        font_name: 'timeburner_regular.ttf'
+                        color: (0,0,0, 1)
+                        pos_hint: {'x': 0, 'y': 0.23}
+                        text: 'What, son?'
+                        font_size: '35dp'
+                        bold: True
+
+                    GridLayout:
+                        pos_hint: {'x': .22, 'y': .6}
+                        size_hint_x: .5
+                        size_hint_y: .04
+                        rows:1
+                        TextInput:
+                            id: _searchTerm
+                            hint_text: 'What do you need help on?'
+                            font_size: '11dp'
+
+                    Button:
+                        background_color:  (0.364705882,0.637254902,0.823529412,1)
+                        background_normal: ''
+                        size_hint: (.12, 0.04)
+                        pos_hint: {'x': .72, 'y': .6}
+                        text: 'Search'
+                        font_size: '11dp'
+                        on_release: root.search_term = root.query(_searchTerm.text)
+                        on_release: manager.current = 'search_result'
+
+
+            Screen:
+                name: 'search_result'
+                FloatLayout:
+                    rows: 15
+                    canvas.before:
+                        Color:
+                            rgb: (0.952941176   ,0.949019608,0.933333333)
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                    Carousel:
+                        id: cad
+                        fullscreen: True
+                        loop: True
+
+                        Label:
+                            color:(0,0,0,1)
+                            pos_hint: {'x': 0, 'y': .25}
+                            markup: True
+                            bold: True
+                            split_str: True
+                            shorten: True
+                            text: root.search + "\n\n\n\n\n\n\n\n\n\n\n\n\n\n" + "CONFIDENCE: \n" + root.s_confidence 
+                            font_size: '10dp'
+
+                        Label:
+                            color: (0,0,0,1)
+                            pos_hint: {'x': 0, 'y': .25}
+                            markup: True
+                            bold: True
+                            split_str: True
+                            text: root.search1 + "\n\n\n\n\n\n\n\n\n\n\n\n\n\n" + "CONFIDENCE: \n" + root.s1_confidence 
+                            font_size: '10dp'
+
+                        Label:
+                            color: (0,0,0,1)
+                            pos_hint: {'x': 0, 'y': .25}
+                            markup: True
+                            bold: True
+                            split_str: True
+                            text: root.search2 + "\n\n\n\n\n\n\n\n\n\n\n\n\n\n" + "CONFIDENCE: \n" + root.s2_confidence 
+                            font_size: '10dp'
+
+
+                    Button:
+                        background_color:  (0.058823529, 0.458823529, 0.741176471, 1)
+                        background_normal: ''
+                        size_hint: (1, 0.05)
+                        pos_hint: {'x': 0, 'y': 0}
+                        text: 'Continue '
+                        on_release: manager.current = 'analysis'
+
