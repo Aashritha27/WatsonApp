@@ -152,12 +152,7 @@ class AndroidApp(App):
     s1_confidence = StringProperty()
     s2_confidence = StringProperty()
 
-
-    def update_variables(self,result):
-        search = d
-
     def login(self, email, password):
-        auth_token = ''
         payload = urllib.urlencode({'email': email, 'password': password})
         endpoint = "http://calwatson.herokuapp.com/question"
         headers = {'Content-type': 'application/x-www-form-urlencoded', 'Accept': 'text/plain'}
@@ -186,7 +181,6 @@ class AndroidApp(App):
             pass
             # not able to find auth token
         return last_queries
-
 
     def query(self, term):
 
