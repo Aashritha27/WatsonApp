@@ -1,0 +1,292 @@
+#:kivy 1.8.0
+
+<SidePanel>:
+
+    orientation: 'vertical'
+    spacing: 1
+
+    MenuItem:
+        text: 'Search'
+
+    MenuItem:
+        text: 'Saved Searches'
+
+    MenuItem:
+        text: 'My Patents'
+
+    MenuItem:
+        text: 'Settings'
+
+<AppActionBar>:
+    pos_hint: {'top':1}
+    ActionView:
+        use_separator: True
+        ActionMenu:
+            color: (0.952941176   ,0.949019608, 0.933333333) 
+            font_name: 'JosefinSans-Regular.ttf'
+            #title: (' Tent ')
+            with_previous: False
+            app_icon: 'side_menu_rectangles.png'
+            #icon: 'tent_logo.png'
+            on_press: self.menu()
+<MainPanel>:
+    usrnm: _usrnm
+    psswrd: _psswrd
+    orientation: 'vertical'
+    spacing: 1
+
+    AppActionBar:
+        size_hint: (1., 0.06)
+
+    ScreenManager:
+        id: manager
+
+        Screen:
+            name: 'landing'
+
+            FloatLayout:
+                canvas.before:
+                    Color:
+                        rgb: (0.952941176   ,0.949019608,0.933333333)
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                Image:
+                    source: 'tent_logo_colo.png'
+                    pos_hint: {'x': .25, 'y': 0.5}
+                    size_hint: (0.5, 0.5)
+                    allow_stretch: True
+
+                Label:
+                    font_name: 'JosefinSans-Regular.ttf'
+                    color: (0,0,0, 1)
+                    pos_hint: {'x': 0, 'y': 0.16}
+                    #text: 'Faster time to market.'
+                    font_size: '15dp'
+
+                Image:
+                    source: 'login_user.png'
+                    pos_hint: {'x': 0.11, 'y': 0.329} 
+                    size_hint: (0.11, 0.11)
+                    allow_stretch: True
+
+                Image:
+                    source: 'login_password.png'
+                    pos_hint: {'x': 0.11, 'y': 0.229} 
+                    size_hint: (0.11, 0.11)
+                    allow_stretch: True
+
+                GridLayout:
+                    pos_hint: {'x': 0.22, 'y': 0.35}
+                    size_hint: (0.66, 0.07)
+                    rows: 1
+
+                    TextInput:
+                        id: _usrnm
+                        font_size: '25dp'
+                        font_name: 'JosefinSans-Regular.ttf'
+                        background_normal: ''
+                        background_active: 'light_blue.png'
+                        hint_text: 'username'
+
+                GridLayout:
+                    pos_hint: {'x': 0.22, 'y': 0.25}
+                    size_hint: (0.66, 0.07)
+                    rows: 1
+
+                    TextInput:
+                        id: _psswrd
+                        font_size: '25dp'
+                        font_name: 'JosefinSans-Regular.ttf'
+                        background_normal: ''
+                        background_active: 'light_blue.png'
+                        hint_text: 'password'
+                        password: True
+  
+                Button:
+                    background_color:  (0.364705882,0.637254902,0.823529412,1)
+                    background_normal: ''
+                    size_hint: (1, 0.07)
+                    pos_hint: {'x': 0, 'y': 0}
+                    font_name: 'JosefinSans-Regular.ttf'
+                    font_size: '25dp'
+                    text: 'Login'
+                    on_press: app.login( _usrnm.text, _psswrd.text)
+                    on_release: manager.current = 'analysis'
+
+                Button:
+                    background_color: (0.24705882352941178, 0.4235294117647059, 0.9215686274509803,1)
+                    background_normal: ''
+                    size_hint: (.5, 0.05)
+                    pos_hint: {'x': .25, 'y': 0.15}
+                    font_name: 'JosefinSans-Regular.ttf'
+                    font_size: '15dp'
+                    text: 'New? Create Account'
+                    on_press: app.login( _usrnm.text, _psswrd.text)
+                    on_release: manager.current = 'analysis'
+
+        Screen:
+
+            name: 'analysis'
+
+            FloatLayout:
+                rows: 15
+                canvas.before:
+                    Color:
+                        rgb: (0.952941176,0.949019608,0.933333333)
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+                Label:
+                    font_name: 'timeburner_regular.ttf'
+                    color: (0,0,0, 1)
+                    pos_hint: {'x': 0, 'y': 0.23}
+                    text: 'What, son?'
+                    font_size: '35dp'
+                    bold: True
+
+                GridLayout:
+                    pos_hint: {'x': .25, 'y': 0.3}
+                    size_hint_x: .5
+                    size_hint_y: .3
+                    rows:1
+                    TextInput:
+                        background_normal: ''
+                        id: _searchTerm
+                        hint_text: 'What do you need help on?'
+                        font_size: '11dp'
+
+                Button:
+                    background_color:  (0.364705882,0.637254902,0.823529412,1)
+                    background_normal: ''
+                    size_hint: (0.3, 0.1)
+                    pos_hint: {'x': .25, 'y': .6}
+                    text: 'Search'
+                    font_size: '11dp'
+                    on_release: app.search_term = app.query(_searchTerm.text)
+                    on_release: manager.current = 'search_result'
+
+        Screen:
+            name: 'search_result'
+            FloatLayout:
+                rows: 15
+                canvas.before:
+                    Color:
+                        rgb: (0.952941176   ,0.949019608,0.933333333)
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                Carousel:
+                    id: cad
+                    fullscreen: True
+                    loop: True
+
+                    Label:
+                        color:(0,0,0,1)
+                        pos_hint: {'x': 0, 'y': .25}
+                        markup: True
+                        bold: True
+                        split_str: True
+                        shorten: True
+                        text: app.search + "\n\n\n\n\n\n\n\n\n\n\n\n\n\n" + "CONFIDENCE: \n" + app.s_confidence 
+                        font_size: '10dp'
+
+                    Label:
+                        color: (0,0,0,1)
+                        pos_hint: {'x': 0, 'y': .25}
+                        markup: True
+                        bold: True
+                        split_str: True
+                        text: app.search1 + "\n\n\n\n\n\n\n\n\n\n\n\n\n\n" + "CONFIDENCE: \n" + app.s1_confidence 
+                        font_size: '10dp'
+
+                    Label:
+                        color: (0,0,0,1)
+                        pos_hint: {'x': 0, 'y': .25}
+                        markup: True
+                        bold: True
+                        split_str: True
+                        text: app.search2 + "\n\n\n\n\n\n\n\n\n\n\n\n\n\n" + "CONFIDENCE: \n" + app.s2_confidence 
+                        font_size: '10dp'
+
+
+                Button:
+                    background_color:  (0.058823529, 0.458823529, 0.741176471, 1)
+                    background_normal: ''
+                    size_hint: (1, 0.05)
+                    pos_hint: {'x': 0, 'y': 0}
+                    text: 'Continue '
+                    on_release: manager.current = 'analysis'
+
+<PaginaTre>:
+    orientation: 'vertical'
+    spacing: 1
+
+    AppActionBar:
+        size_hint: (1., 0.1)
+
+    Image:
+        source: 'tent_logo.png'
+
+<PaginaDue>:
+    orientation: 'vertical'
+    spacing: 1
+
+    AppActionBar:
+        size_hint: (1., 0.1)
+
+    Label:
+        text: 'due'
+
+<PaginaUno>:
+    orientation: 'vertical'
+    spacing: 1
+
+    AppActionBar:
+        size_hint: (1., 0.1)
+
+    Label:
+        text: 'applicazione'
+    ScreenManager:
+        id: manager
+
+        Screen:
+            name: 'analysis'
+            FloatLayout:
+                rows: 15
+                canvas.before:
+                    Color:
+                        rgb: (0.952941176,0.949019608,0.933333333)
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+                Label:
+                    font_name: 'timeburner_regular.ttf'
+                    color: (0,0,0, 1)
+                    pos_hint: {'x': 0, 'y': 0.23}
+                    text: 'What, son?'
+                    font_size: '35dp'
+                    bold: True
+
+                GridLayout:
+                    pos_hint: {'x': .22, 'y': .6}
+                    size_hint_x: .5
+                    size_hint_y: .04
+                    rows:1
+                    TextInput:
+                        id: _searchTerm
+                        hint_text: 'What do you need help on?'
+                        font_size: '11dp'
+
+                Button:
+                    background_color:  (0.364705882,0.637254902,0.823529412,1)
+                    background_normal: ''
+                    size_hint: (.12, 0.04)
+                    pos_hint: {'x': .33, 'y': .33}
+                    text: 'Search'
+                    font_size: '11dp'
+                    on_release: app.search_term = app.query(_searchTerm.text)
+                    on_release: manager.current = 'search_result'
+
