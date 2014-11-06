@@ -35,17 +35,35 @@ class Tent(FloatLayout):
     s2_confidence = StringProperty()
 
     def login(self, email, password):
+        auth_token = ""
         payload = urllib.urlencode({'email': email, 'password': password})
-        endpoint = "http://calwatson.herokuapp.com/question"
+        endpoint = "http://calwatson.herokuapp.com/users/sign_in"
         headers = {'Content-type': 'application/x-www-form-urlencoded', 'Accept': 'text/plain'}
         r = UrlRequest(endpoint, req_body=payload, req_headers=headers,debug=True)
         r.wait()
-        try:
+        if r.result == "No user account exists for that customer":
+            pass
+        elif r.result == "Incorrect password":
+            pass
+        elif r.result['auth_token'] != None:
             auth_token = r.result['auth_token']
-            my_token = auth_token
-        except:
-            # not able to find user
+        else:
+            print "Should never get here"
         return auth_token
+
+    def signup(self, email, password):
+        payload = urllib.urlencode({'email': email, 'password': password})
+        endpoint = "http://calwatson.herokuapp.com/users/sign_up"
+        headers = {'Content-type': 'application/x-www-form-urlencoded', 'Accept': 'text/plain'}
+        r = UrlRequest(endpoint, req_body=payload, req_headers=headers,debug=True)
+        r.wait()
+        if r.result == "Successful sign up":
+            pass
+        elif r.result == "That email is already taken.":
+            pass
+        else:
+            print "Should never get here"
+        return
 
     def get_last_five_queries(self, token):
         payload = urllib.urlencode({'token': token})
