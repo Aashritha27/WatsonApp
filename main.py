@@ -75,6 +75,7 @@ class Tent(FloatLayout):
             last_queries = r.result['answers']
         except:
             # not able to find auth token
+            pass
         return last_queries
 
     def query(self, term):
