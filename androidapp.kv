@@ -24,7 +24,7 @@
         use_separator: True
         ActionMenu:
             color: (0.952941176   ,0.949019608, 0.933333333) 
-            font_name: 'JosefinSans-Regular.ttf'
+            font_name: 'assets/JosefinSans-Regular.ttf'
             #title: (' Tent ')
             with_previous: False
             app_icon: 'assets/side_menu_rectangles.png'
@@ -66,14 +66,14 @@
                     allow_stretch: True
 
                 Label:
-                    font_name: 'JosefinSans-Regular.ttf'
+                    font_name: 'assets/JosefinSans-Regular.ttf'
                     color: (0,0,0, 1)
                     pos_hint: {'x': 0, 'y': 0.16}
                     #text: 'Faster time to market.'
                     font_size: '15dp'
 
                 Label:
-                    font_name: 'JosefinSans-Regular.ttf'
+                    font_name: 'assets/JosefinSans-Regular.ttf'
                     text: app.login_text
                 #Image:
                 #    source: 'login_user.png'
@@ -95,7 +95,7 @@
                     TextInput:
                         id: _usrnm
                         font_size: '25dp'
-                        font_name: 'Roboto-Thin.ttf'
+                        font_name: 'assets/Roboto-Thin.ttf'
                         background_normal: ''
                         background_active: 'assets/light_blue.png'
                         hint_text: 'Username'
@@ -109,7 +109,7 @@
                     TextInput:
                         id: _psswrd
                         font_size: '25dp'
-                        font_name: 'Roboto-Thin.ttf'
+                        font_name: 'assets/Roboto-Thin.ttf'
                         background_normal: ''
                         background_active: 'assets/light_blue.png'
                         hint_text: 'Password'
@@ -120,7 +120,7 @@
                     background_normal: ''
                     size_hint: (1, 0.07)
                     pos_hint: {'x': 0, 'y': 0}
-                    font_name: 'JosefinSans-Regular.ttf'
+                    font_name: 'assets/JosefinSans-Regular.ttf'
                     font_size: '25dp'
                     text: 'Login'
                     on_press: app.login( _usrnm.text, _psswrd.text)
@@ -134,7 +134,7 @@
                     background_normal: ''
                     size_hint: (.5, 0.05)
                     pos_hint: {'x': .25, 'y': 0.15}
-                    font_name: 'JosefinSans-Regular.ttf'
+                    font_name: 'assets/JosefinSans-Regular.ttf'
                     font_size: '15dp'
                     text: 'New? Create Account'
 
@@ -163,7 +163,7 @@
                         size: self.size
 
                 Label:
-                    font_name: 'timeburner_regular.ttf'
+                    font_name: 'assets/timeburner_regular.ttf'
                     color: (0,0,0, 1)
                     pos_hint: {'x': 0, 'y': 0.23}
                     text: 'Step 1.'
