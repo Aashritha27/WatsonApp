@@ -1,19 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-#
-#-------------------------------------------------------------------------------
-# Name:        androidApp.py
-# Purpose:     Simple example of a android application skeleton that manages
-#              application menu using ActionBar and SidePanelMenu that slides
-#              over the main panel
-#
-# Author:      Licia Leanza
-#
-# Created:     13-04-2014
-# Copyright:   (c) Licia Leanza: 2014
-# Licence:     GPL v2
-#-------------------------------------------------------------------------------
-
 #--------------------------------------------------------------------------
+
 '''dictionary that contains the correspondance between items descriptions
 and methods that actually implement the specific function and panels to be
 shown instead of the first main_panel
@@ -21,7 +9,7 @@ shown instead of the first main_panel
 
 SidePanel_AppMenu = {'voce uno':['on_uno',None],
                      'Search':  ['on_search',None],
-                     'voce due':['on_due',None],
+                     'Saved Searches':['on_saved',None],
                      'voce tre':['on_tre',None],
                      }
 id_AppMenu_METHOD = 0
@@ -122,6 +110,7 @@ class NavDrawer(NavigationDrawer):
 
     def __init__(self, **kwargs):
         super(NavDrawer, self).__init__( **kwargs)
+        self.separator_image = 'assets/navigationdrawer_gradient_ltor.png'
         self.separator_image_width=dp(5)
 
     def close_sidepanel(self, animate=True):
@@ -133,6 +122,8 @@ class NavDrawer(NavigationDrawer):
 
 class AndroidApp(App):
     #have a reference toscreen manager called mang
+
+    logged_in = False
 
     login_text = StringProperty()
     
@@ -167,9 +158,10 @@ class AndroidApp(App):
             self.login_text = r.result
             pass
         elif r.result['auth_token'] != None:
-            self.login_error = 'Welcome!'
+            self.login_text = 'Welcome!'
             auth_token = r.result['auth_token']
             self.my_token = auth_token
+            self.logged_in = True
             self.manager.current = 'analysis'
 #change Screen!
         else:
@@ -184,7 +176,8 @@ class AndroidApp(App):
         r.wait()
         if r.result == "Successful sign up":
             self.login_text = 'Welcome!'
-            pass
+            self.login(email,password)
+
         elif r.result == "That email is already taken.":
             self.login_text = r.result
             pass
@@ -280,7 +273,6 @@ class AndroidApp(App):
     def build(self):
 
         global RootApp
-        #I COMMENTED THE ROOTAPP AWAY
         RootApp = self
 
         # NavigationDrawer
@@ -304,9 +296,38 @@ class AndroidApp(App):
     def toggle_sidepanel(self):
         self.navigationdrawer.toggle_state()
 
-    def on_search(self):
+    def on_saved(self):
         self.navigationdrawer.close_sidepanel()
-        self.manager.current = 'landing'
+        if self.logged_in != True:
+            self.login_text = 'Please login before continuing.'
+        else:
+            self.manager.current = 'analysis'
+        #switch to saved
+    def on_patents(self):
+
+        self.navigationdrawer.close_sidepanel()
+        if self.logged_in != True:
+            self.login_text = 'Please login before continuing.'
+        else:
+            self.manager.current = 'analysis'
+
+    def on_Settings(self):
+
+        self.navigationdrawer.close_sidepanel()
+        if self.logged_in != True:
+            self.login_text = 'Please login before continuing.'
+        else:
+            self.manager.current = 'analysis'
+
+
+
+    def on_search(self):
+
+        self.navigationdrawer.close_sidepanel()
+        if self.logged_in != True:
+            self.login_text = 'Please login before continuing.'
+        else:
+            self.manager.current = 'analysis'
         #self._switch_main_page('Search', Saved)
         #self._switch_main_page('voce uno', PaginaUno)
 
