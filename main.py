@@ -9,8 +9,9 @@ shown instead of the first main_panel
 
 SidePanel_AppMenu = {'voce uno':['on_uno',None],
                      'Search':  ['on_search',None],
+                     'My Patents': ['on_patents',None],
                      'Saved Searches':['on_saved',None],
-                     'voce tre':['on_tre',None],
+                     'Settings':['on_settings',None],
                      }
 id_AppMenu_METHOD = 0
 id_AppMenu_PANEL = 1
@@ -311,8 +312,7 @@ class AndroidApp(App):
         else:
             self.manager.current = 'analysis'
 
-    def on_Settings(self):
-
+    def on_settings(self):
         self.navigationdrawer.close_sidepanel()
         if self.logged_in != True:
             self.login_text = 'Please login before continuing.'
