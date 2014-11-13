@@ -1,4 +1,5 @@
 #:kivy 1.8.0
+#:import RiseInTransition kivy.uix.screenmanager.RiseInTransition
 
 <SidePanel>:
 
@@ -26,9 +27,10 @@
             font_name: 'JosefinSans-Regular.ttf'
             #title: (' Tent ')
             with_previous: False
-            app_icon: 'side_menu_rectangles.png'
+            app_icon: 'assets/side_menu_rectangles.png'
             #icon: 'tent_logo.png'
             on_press: self.menu()
+
 <MainPanel>:
     usrnm: _usrnm
     psswrd: _psswrd
@@ -40,19 +42,25 @@
 
     ScreenManager:
         id: manager
-
         Screen:
             name: 'landing'
-
             FloatLayout:
                 canvas.before:
-                    Color:
-                        rgb: (0.952941176   ,0.949019608,0.933333333)
-                    Rectangle:
-                        pos: self.pos
-                        size: self.size
+
                 Image:
-                    source: 'tent_logo_colo.png'
+                    source: 'assets/ny_back.png'
+                    allow_stretch: True
+                    pos_hint: { 'x': -.2, 'y': 0}
+                    size_hint: (1.3, 1.3)
+
+                    #Color:
+                    #    rgb: (0.952941176   ,0.949019608,0.933333333)
+                    #Rectangle:
+                    #    pos: self.pos
+                    #    size: self.size
+
+                Image:
+                    source: 'assets/tent_logo1.png'
                     pos_hint: {'x': .25, 'y': 0.5}
                     size_hint: (0.5, 0.5)
                     allow_stretch: True
@@ -64,45 +72,49 @@
                     #text: 'Faster time to market.'
                     font_size: '15dp'
 
-                Image:
-                    source: 'login_user.png'
-                    pos_hint: {'x': 0.11, 'y': 0.329} 
-                    size_hint: (0.11, 0.11)
-                    allow_stretch: True
+                Label:
+                    font_name: 'JosefinSans-Regular.ttf'
+                    text: app.login_text
+                #Image:
+                #    source: 'login_user.png'
+                #    pos_hint: {'x': 0.11, 'y': 0.329} 
+                #    size_hint: (0.11, 0.11)
+                #    allow_stretch: True
 
-                Image:
-                    source: 'login_password.png'
-                    pos_hint: {'x': 0.11, 'y': 0.229} 
-                    size_hint: (0.11, 0.11)
-                    allow_stretch: True
+                #Image:
+                #    source: 'login_password.png'
+                #    pos_hint: {'x': 0.11, 'y': 0.229} 
+                #    size_hint: (0.11, 0.11)
+                #    allow_stretch: True
 
                 GridLayout:
-                    pos_hint: {'x': 0.22, 'y': 0.35}
+                    pos_hint: {'x': 0.165, 'y': 0.35}
                     size_hint: (0.66, 0.07)
                     rows: 1
 
                     TextInput:
                         id: _usrnm
                         font_size: '25dp'
-                        font_name: 'JosefinSans-Regular.ttf'
+                        font_name: 'Roboto-Thin.ttf'
                         background_normal: ''
-                        background_active: 'light_blue.png'
-                        hint_text: 'username'
+                        background_active: 'assets/light_blue.png'
+                        hint_text: 'Username'
 
                 GridLayout:
-                    pos_hint: {'x': 0.22, 'y': 0.25}
+
+                    pos_hint: {'x': 0.165, 'y': 0.25}
                     size_hint: (0.66, 0.07)
                     rows: 1
 
                     TextInput:
                         id: _psswrd
                         font_size: '25dp'
-                        font_name: 'JosefinSans-Regular.ttf'
+                        font_name: 'Roboto-Thin.ttf'
                         background_normal: ''
-                        background_active: 'light_blue.png'
-                        hint_text: 'password'
+                        background_active: 'assets/light_blue.png'
+                        hint_text: 'Password'
                         password: True
-  
+     
                 Button:
                     background_color:  (0.364705882,0.637254902,0.823529412,1)
                     background_normal: ''
@@ -112,23 +124,35 @@
                     font_size: '25dp'
                     text: 'Login'
                     on_press: app.login( _usrnm.text, _psswrd.text)
-                    on_release: manager.current = 'analysis'
+                    on_press: manager.transition = RiseInTransition()
+                    on_press: app.manager = manager
+                   # on_release: manager.current = 'analysis'
 
                 Button:
-                    background_color: (0.24705882352941178, 0.4235294117647059, 0.9215686274509803,1)
+                    background_color:  (0.364705882,0.637254902,0.823529412,1)
+                    #background_color: (0.06666666666666667,0.26666666666666666,0.6666666666666666,1)
                     background_normal: ''
                     size_hint: (.5, 0.05)
                     pos_hint: {'x': .25, 'y': 0.15}
                     font_name: 'JosefinSans-Regular.ttf'
                     font_size: '15dp'
                     text: 'New? Create Account'
-                    on_press: app.login( _usrnm.text, _psswrd.text)
-                    on_release: manager.current = 'analysis'
+
+                    on_press: manager.transition = RiseInTransition()
+                    on_press: app.manager = manager
+                    on_release: app.signup( _usrnm.text, _psswrd.text)
+                   # on_release: manager.current = 'analysis'
 
         Screen:
+            name: 'login_error'
+            Image:
+                source: 'assets/tent_logo_colo.png'
+                pos_hint: {'x': .25, 'y': 0.5}
+                size_hint: (0.5, 0.5)
+                allow_stretch: True
 
+        Screen:
             name: 'analysis'
-
             FloatLayout:
                 rows: 15
                 canvas.before:
@@ -142,7 +166,7 @@
                     font_name: 'timeburner_regular.ttf'
                     color: (0,0,0, 1)
                     pos_hint: {'x': 0, 'y': 0.23}
-                    text: 'What, son?'
+                    text: 'Step 1.'
                     font_size: '35dp'
                     bold: True
 
@@ -154,13 +178,13 @@
                     TextInput:
                         background_normal: ''
                         id: _searchTerm
-                        hint_text: 'What do you need help on?'
+                        hint_text: 'Brielfy describe your patent idea'
                         font_size: '11dp'
 
                 Button:
                     background_color:  (0.364705882,0.637254902,0.823529412,1)
                     background_normal: ''
-                    size_hint: (0.3, 0.1)
+                    size_hint: (0.5, 0.1)
                     pos_hint: {'x': .25, 'y': .6}
                     text: 'Search'
                     font_size: '11dp'
@@ -227,7 +251,7 @@
         size_hint: (1., 0.1)
 
     Image:
-        source: 'tent_logo.png'
+        source: 'assets/tent_logo.png'
 
 <PaginaDue>:
     orientation: 'vertical'

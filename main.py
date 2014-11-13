@@ -19,7 +19,8 @@ and methods that actually implement the specific function and panels to be
 shown instead of the first main_panel
 '''
 
-SidePanel_AppMenu = {'Search':['on_search',None],
+SidePanel_AppMenu = {'voce uno':['on_uno',None],
+                     'Search':  ['on_search',None],
                      'voce due':['on_due',None],
                      'voce tre':['on_tre',None],
                      }
@@ -62,7 +63,6 @@ RootApp = None
 class SidePanel(BoxLayout):
     pass
 
-
 class MenuItem(Button):
     background_normal = ''
     background_color=  (0.364705882,0.637254902,0.823529412,1)
@@ -79,12 +79,9 @@ class MenuItem(Button):
             return
         getattr(RootApp, function_to_call)()
 
-#
-
 class AppActionBar(ActionBar):
     ActionBar.background_image = ''
     ActionBar.background_color = (0.364705882,0.637254902,0.823529412,1)
-
 
 class ActionMenu(ActionPrevious):
     def menu(self):
@@ -96,7 +93,6 @@ class ActionQuit(ActionButton):
     def menu(self):
         print 'App quit'
         RootApp.stop()
-
 
 class MainPanel(BoxLayout):
     pass
@@ -137,10 +133,14 @@ class NavDrawer(NavigationDrawer):
 
 class AndroidApp(App):
     #have a reference toscreen manager called mang
+
+    login_text = StringProperty()
     
     welcome = StringProperty()
     search_term = StringProperty()
     search_sentiment = StringProperty()
+
+    my_token = StringProperty()
 
     response = StringProperty()
 
@@ -160,12 +160,18 @@ class AndroidApp(App):
         r = UrlRequest(endpoint, req_body=payload, req_headers=headers,debug=True)
         r.wait()
         if r.result == "No user account exists for that customer":
-            pass
+            self.login_text = r.result + '\n       Please create an account below.'
+            #self.manager.current = 'login_error' 
+            
         elif r.result == "Incorrect password":
+            self.login_text = r.result
             pass
         elif r.result['auth_token'] != None:
+            self.login_error = 'Welcome!'
             auth_token = r.result['auth_token']
-            my_token = auth_token
+            self.my_token = auth_token
+            self.manager.current = 'analysis'
+#change Screen!
         else:
             print "Should never get here"
         return auth_token
@@ -177,8 +183,10 @@ class AndroidApp(App):
         r = UrlRequest(endpoint, req_body=payload, req_headers=headers,debug=True)
         r.wait()
         if r.result == "Successful sign up":
+            self.login_text = 'Welcome!'
             pass
         elif r.result == "That email is already taken.":
+            self.login_text = r.result
             pass
         else:
             print "Should never get here"
@@ -200,11 +208,12 @@ class AndroidApp(App):
 
     def query(self, term):
 
-        payload = urllib.urlencode({'question': "{0}".format(term), 'token': my_token})
+        payload = urllib.urlencode({'question': "{0}".format(term), 'token': self.my_token})
         headers = {'Content-type': 'application/x-www-form-urlencoded', 'Accept': 'text/plain'}
 
         r = UrlRequest(endpoint, req_body=payload, req_headers=headers,debug=True)
         r.wait()
+        print r.result
 
         try:
             d = r.result
@@ -271,6 +280,7 @@ class AndroidApp(App):
     def build(self):
 
         global RootApp
+        #I COMMENTED THE ROOTAPP AWAY
         RootApp = self
 
         # NavigationDrawer
@@ -295,11 +305,18 @@ class AndroidApp(App):
         self.navigationdrawer.toggle_state()
 
     def on_search(self):
-        self._switch_main_page('Search', PaginaUno)
+        self.navigationdrawer.close_sidepanel()
+        self.manager.current = 'landing'
+        #self._switch_main_page('Search', Saved)
+        #self._switch_main_page('voce uno', PaginaUno)
+
+    def on_uno(self):
+        self._switch_main_page('voce uno', PaginaUno)
 
     def on_due(self):
         print 'DUE... exec'
         self._switch_main_page('voce due', PaginaDue)
+
     def on_tre(self):
         print 'TRE... exec'
         self._switch_main_page('voce tre',  PaginaTre)
