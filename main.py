@@ -74,8 +74,10 @@ class AppActionBar(ActionBar):
 
 class ActionMenu(ActionPrevious):
     def menu(self):
-        print 'ActionMenu'
-        RootApp.toggle_sidepanel()
+        if RootApp.logged_in:
+            RootApp.toggle_sidepanel()
+        else:
+            RootApp.login_text = "Please login to continue." 
 
 class ActionQuit(ActionButton):
     pass
@@ -109,6 +111,7 @@ class NavDrawer(NavigationDrawer):
     #side_panel_width = dp(200)
     side_panel_init_offset = dp(2)
 
+    
     def __init__(self, **kwargs):
         super(NavDrawer, self).__init__( **kwargs)
         self.separator_image = 'assets/navigationdrawer_gradient_ltor.png'
@@ -124,6 +127,7 @@ class NavDrawer(NavigationDrawer):
 class AndroidApp(App):
     #have a reference toscreen manager called mang
 
+    navbar_label = StringProperty()
     logged_in = False
 
     login_text = StringProperty()
@@ -159,6 +163,7 @@ class AndroidApp(App):
             self.login_text = r.result
             pass
         elif r.result['auth_token'] != None:
+            self.navbar_label = email
             self.login_text = 'Welcome!'
             auth_token = r.result['auth_token']
             self.my_token = auth_token
@@ -285,12 +290,15 @@ class AndroidApp(App):
         side_panel = SidePanel()
         
         self.navigationdrawer.add_widget( side_panel)
+        self.navigationdrawer.logged_in = False
 
         # MainPanel
         self.main_panel = MainPanel()
 
         self.navigationdrawer.anim_type = 'slide_above_anim'
         self.navigationdrawer.add_widget(self.main_panel)
+
+        self.navbar_label = 'Tent'
 
         return self.navigationdrawer
 
@@ -302,7 +310,7 @@ class AndroidApp(App):
         if self.logged_in != True:
             self.login_text = 'Please login before continuing.'
         else:
-            self.manager.current = 'analysis'
+            self.manager.current = 'saved_searches'
         #switch to saved
     def on_patents(self):
 
@@ -310,14 +318,14 @@ class AndroidApp(App):
         if self.logged_in != True:
             self.login_text = 'Please login before continuing.'
         else:
-            self.manager.current = 'analysis'
+            self.manager.current = 'my_patents'
 
     def on_settings(self):
         self.navigationdrawer.close_sidepanel()
         if self.logged_in != True:
             self.login_text = 'Please login before continuing.'
         else:
-            self.manager.current = 'analysis'
+            self.manager.current = 'settings'
 
 
 

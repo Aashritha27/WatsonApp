@@ -25,7 +25,7 @@
         ActionMenu:
             color: (0.952941176   ,0.949019608, 0.933333333) 
             font_name: 'assets/JosefinSans-Regular.ttf'
-            #title: (' Tent ')
+            title: app.navbar_label
             with_previous: False
             app_icon: 'assets/side_menu_rectangles.png'
             #icon: 'tent_logo.png'
@@ -142,17 +142,9 @@
                     on_press: app.manager = manager
                     on_release: app.signup( _usrnm.text, _psswrd.text)
                    # on_release: manager.current = 'analysis'
-
-        Screen:
-            name: 'login_error'
-            Image:
-                source: 'assets/tent_logo_colo.png'
-                pos_hint: {'x': .25, 'y': 0.5}
-                size_hint: (0.5, 0.5)
-                allow_stretch: True
-
         Screen:
             name: 'analysis'
+
             FloatLayout:
                 rows: 15
                 canvas.before:
@@ -185,13 +177,14 @@
                     background_color:  (0.364705882,0.637254902,0.823529412,1)
                     background_normal: ''
                     size_hint: (0.5, 0.1)
-                    pos_hint: {'x': .25, 'y': .6}
+                    pos_hint: {'x': .25, 'y': 0.3}
                     text: 'Search'
                     font_size: '11dp'
                     on_release: app.search_term = app.query(_searchTerm.text)
                     on_release: manager.current = 'search_result'
 
         Screen:
+
             name: 'search_result'
             FloatLayout:
                 rows: 15
@@ -242,3 +235,61 @@
                     pos_hint: {'x': 0, 'y': 0}
                     text: 'Continue '
                     on_release: manager.current = 'analysis'
+
+        Screen:
+            name: 'saved_searches'
+            FloatLayout:
+                rows: 15
+                canvas.before:
+                    Color:
+                        rgb: (0.952941176,0.949019608,0.933333333)
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+                Label:
+                    font_name: 'assets/timeburner_regular.ttf'
+                    color: (0,0,0, 1)
+                    pos_hint: {'x': 0, 'y': 0.23}
+                    text: 'Saved Searches'
+                    font_size: '35dp'
+                    bold: True
+
+        Screen:
+
+            name: 'my_patents'
+            FloatLayout:
+                rows: 15
+                canvas.before:
+                    Color:
+                        rgb: (0.952941176,0.949019608,0.933333333)
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+                Label:
+                    font_name: 'assets/timeburner_regular.ttf'
+                    color: (0,0,0, 1)
+                    pos_hint: {'x': 0, 'y': 0.23}
+                    text: 'My Patents'
+                    font_size: '35dp'
+                    bold: True
+
+        Screen:
+            name: 'settings'
+            FloatLayout:
+                rows: 15
+                canvas.before:
+                    Color:
+                        rgb: (0.952941176,0.949019608,0.933333333)
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+                Label:
+                    font_name: 'assets/timeburner_regular.ttf'
+                    color: (0,0,0, 1)
+                    pos_hint: {'x': 0, 'y': 0.23}
+                    text: 'Settings'
+                    font_size: '35dp'
+                    bold: True
