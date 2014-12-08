@@ -43,6 +43,8 @@ from kivy.network.urlrequest import UrlRequest
 
 import urllib
 
+# patent dictionary
+from patents import *
 
 endpoint = 'http://calwatson.herokuapp.com/question'
 my_token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im9za2lfYmVhciIsInBhc3N3b3JkIjoicGFzc3dvcmQ3In0.I8Z0BPvf_9sb9kp19Tek1ZxC50Im1YebB-TE3Oc6Rps'
