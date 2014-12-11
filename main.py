@@ -1,22 +1,17 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-#
 #--------------------------------------------------------------------------
-
-'''dictionary that contains the correspondance between items descriptions
-and methods that actually implement the specific function and panels to be
-shown instead of the first main_panel
-'''
-
-SidePanel_AppMenu = {'voce uno':['on_uno',None],
+#dictionary mapping side panel IDs to a list of functions that get called on click
+SidePanel_AppMenu = {
                      'Search':  ['on_search',None],
-                     'My Patents': ['on_patents',None],
+                     'Search History': ['on_history',None],
                      'Saved Searches':['on_saved',None],
                      'Settings':['on_settings',None],
                      }
 id_AppMenu_METHOD = 0
 id_AppMenu_PANEL = 1
-
 #--------------------------------------------------------------------------
+
 import kivy
 kivy.require('1.8.0')
 
@@ -42,7 +37,6 @@ from kivy.properties import  ObjectProperty
 from kivy.network.urlrequest import UrlRequest
 
 import urllib
-
 
 endpoint = 'http://calwatson.herokuapp.com/question'
 my_token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im9za2lfYmVhciIsInBhc3N3b3JkIjoicGFzc3dvcmQ3In0.I8Z0BPvf_9sb9kp19Tek1ZxC50Im1YebB-TE3Oc6Rps'
@@ -70,7 +64,8 @@ class MenuItem(Button):
 
 class AppActionBar(ActionBar):
     ActionBar.background_image = ''
-    ActionBar.background_color = (0.364705882,0.637254902,0.823529412,1)
+    #ActionBar.background_color = (0.364705882,0.637254902,0.823529412,1)
+    ActionBar.background_color= (0.8784313725490196, 0.4196078431372549, 0.14901960784313725,1)
 
 class ActionMenu(ActionPrevious):
     def menu(self):
@@ -79,17 +74,21 @@ class ActionMenu(ActionPrevious):
         else:
             RootApp.login_text = "Please login to continue." 
 
+
 class ActionQuit(ActionButton):
     pass
     def menu(self):
         print 'App quit'
         RootApp.stop()
 
+
 class MainPanel(BoxLayout):
     pass
 
 class AppArea(FloatLayout):
     pass
+
+
 
 class PaginaUno(FloatLayout):
     pass
@@ -100,6 +99,9 @@ class PaginaDue(FloatLayout):
 class PaginaTre(FloatLayout):
     pass
 
+
+
+
 class AppButton(Button):
     nome_bottone = ObjectProperty(None)
     def app_pushed(self):
@@ -108,9 +110,7 @@ class AppButton(Button):
 class NavDrawer(NavigationDrawer):
     #this is a dirty way to change panel width
     #only way to do it for now
-    #side_panel_width = dp(200)
     side_panel_init_offset = dp(2)
-
     
     def __init__(self, **kwargs):
         super(NavDrawer, self).__init__( **kwargs)
@@ -140,7 +140,7 @@ class AndroidApp(App):
 
     response = StringProperty()
 
-    search = StringProperty()
+    search0 = StringProperty()
     search1 = StringProperty()
     search2 = StringProperty()
 
@@ -161,17 +161,18 @@ class AndroidApp(App):
             
         elif r.result == "Incorrect password":
             self.login_text = r.result
-            pass
+
         elif r.result['auth_token'] != None:
-            self.navbar_label = email
+            self.navbar_label = "Logged in as " + email
             self.login_text = 'Welcome!'
-            auth_token = r.result['auth_token']
-            self.my_token = auth_token
+            self.my_token = r.result['auth_token']
             self.logged_in = True
             self.manager.current = 'analysis'
-#change Screen!
+            #change Screen!
+
         else:
             print "Should never get here"
+
         return auth_token
 
     def signup(self, email, password):
@@ -197,12 +198,13 @@ class AndroidApp(App):
         headers = {'Content-type': 'application/x-www-form-urlencoded', 'Accept': 'text/plain'}
         r = UrlRequest(endpoint, req_body=payload, req_headers=headers,debug=True)
         r.wait()
+
         try:
             last_queries = r.result['answers']
         except:
-            pass
             # not able to find auth token
             pass
+
         return last_queries
 
     def query(self, term):
@@ -217,7 +219,7 @@ class AndroidApp(App):
         try:
             d = r.result
 
-            search = d['question']['evidencelist'][0]['text']
+            search0 = d['question']['evidencelist'][0]['text']
             self.s_confidence = d['question']['evidencelist'][0]['value']
 
             search1 = d['question']['evidencelist'][1]['text']
@@ -226,7 +228,7 @@ class AndroidApp(App):
             search2 = d['question']['evidencelist'][2]['text']
             self.s2_confidence = d['question']['evidencelist'][2]['value']
         except:
-            search = 'Not found'
+            search0 = 'Not found'
             search1 = 'Not found'
             search2 = 'Not found'
 
@@ -234,20 +236,21 @@ class AndroidApp(App):
             self.s2_confidence = ''
             self.s3_confidence = ''
 
-        self.search = ''
+        self.search0 = ''
         self.search1 = ''
         self.search2 = ''
         j = 0
 
         chars_per_line = 8
-
-        for i in search.split():
+                                
+        for i in search0.split():
 
             if j == 40:
                 break
             if j % chars_per_line == 0:
-                self.search += '\n'
-            self.search += i + ' '
+                self.search0 += '\n'
+                pass
+            self.search0 += i + ' '
             j += 1
         j = 0
         for i in search1.split():
@@ -272,7 +275,6 @@ class AndroidApp(App):
             self.search2 += i  + ' '
             j += 1
 
-
         return self.response
 
 
@@ -284,7 +286,6 @@ class AndroidApp(App):
         # NavigationDrawer
         self.navigationdrawer = NavDrawer()
         #self.navigationdrawer.side_panel_width = .2
-        #self.navigationdrawer.separator_width = 0
 
         # SidePanel
         side_panel = SidePanel()
@@ -312,13 +313,13 @@ class AndroidApp(App):
         else:
             self.manager.current = 'saved_searches'
         #switch to saved
-    def on_patents(self):
+    def on_history(self):
 
         self.navigationdrawer.close_sidepanel()
         if self.logged_in != True:
             self.login_text = 'Please login before continuing.'
         else:
-            self.manager.current = 'my_patents'
+            self.manager.current = 'search_history'
 
     def on_settings(self):
         self.navigationdrawer.close_sidepanel()
@@ -327,28 +328,14 @@ class AndroidApp(App):
         else:
             self.manager.current = 'settings'
 
-
-
     def on_search(self):
-
+        print('why??')
         self.navigationdrawer.close_sidepanel()
+        print('why!?')
         if self.logged_in != True:
             self.login_text = 'Please login before continuing.'
         else:
             self.manager.current = 'analysis'
-        #self._switch_main_page('Search', Saved)
-        #self._switch_main_page('voce uno', PaginaUno)
-
-    def on_uno(self):
-        self._switch_main_page('voce uno', PaginaUno)
-
-    def on_due(self):
-        print 'DUE... exec'
-        self._switch_main_page('voce due', PaginaDue)
-
-    def on_tre(self):
-        print 'TRE... exec'
-        self._switch_main_page('voce tre',  PaginaTre)
 
     def _switch_main_page(self, key,  panel):
         self.navigationdrawer.close_sidepanel()
