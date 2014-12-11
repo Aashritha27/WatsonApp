@@ -103,6 +103,7 @@
                     pos_hint: {'x': 0.165, 'y': 0.4}
                     size_hint: (0.66, 0.07)
                     rows: 1
+
                     TextInput:
                         id: _usrnm
                         font_size: '25dp'
@@ -135,23 +136,23 @@
                     font_name: 'assets/JosefinSans-Regular.ttf'
                     font_size: '15dp'
                     text: 'New? Create Account'
-                    on_press: manager.transition = RiseInTransition()
-                    on_press: app.manager = manager
-                    on_press: app.signup( _usrnm.text, _psswrd.text)
+                    on_release: manager.transition = RiseInTransition()
+                    on_release: app.manager = manager
+                    on_release: app.signup( _usrnm.text, _psswrd.text)
                    # on_release: manager.current = 'analysis'
 
                 Button:
                     background_color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725,1)
                     background_normal: ''
-                    background_down:'assets/fox_orange_dark.png' 
+                    background_down:'assets/fox_orange.png' 
                     size_hint: (1, 0.12)
                     pos_hint: {'x': 0, 'y': 0}
                     font_name: 'assets/Roboto-Thin.ttf'
                     font_size: '40dp'
                     text: 'Sign in'
-                    on_press: app.login( _usrnm.text, _psswrd.text)
-                    on_press: manager.transition = RiseInTransition()
-                    on_press: app.manager = manager
+                    on_release: app.login( _usrnm.text, _psswrd.text)
+                    on_release: manager.transition = RiseInTransition()
+                    on_release: app.manager = manager
                    # on_release: manager.current = 'analysis'
         Screen:
             name: 'analysis'
@@ -182,10 +183,15 @@
                     size_hint_y: .3
                     rows:1
                     TextInput:
-                        background_normal: ''
                         id: _searchTerm
-                        hint_text: 'Brielfy describe your patent idea'
                         font_size: '11dp'
+                        font_name: 'assets/Roboto-Thin.ttf'
+                        background_normal: 'assets/sea_blue.png'
+                        background_active: 'assets/sea_blue_light.png'
+                        hint_text: 'Username'
+                        hint_text_color: (0.09019607843137255, 0.6078431372549019, 0.8627450980392157, 1.0)
+
+
 
                 Button:
                     background_color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725,1)
@@ -314,4 +320,3 @@
                     text: 'Settings'
                     font_size: '35dp'
                     bold: True
-

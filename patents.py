@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-#
+
 documents = {}
 documents['electronic calculator'] = 'Individual planar enjoined links of a flexible wristband carry one or more manually operable keys, thereby defining a miniature keyboard array for a solid state wrist calculator. One or more of the links may carry a wrist watch battery for powering the calculator.'
 documents['electronic watch'] = 'An electronic watch comprising a timepiece circuit consisting of a reference oscillation source, a frequency divider and a display driving circuit, a display device connected to an output of said timepiece circuit, a power supply driving said timepiece circuit, an external actuator operating said timepiece circuit from the exterior of the watch, an outer case consisting of a case and a band, and a flexible hinge making the case integral with the band whereby there may be provided a useful and functional watch which is small in size and thin, and have no shortcoming such as a tendency for disconnection and erroneous wiring.'
