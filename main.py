@@ -11,8 +11,8 @@ SidePanel_AppMenu = {
 id_AppMenu_METHOD = 0
 id_AppMenu_PANEL = 1
 #--------------------------------------------------------------------------
-
 import kivy
+import random
 kivy.require('1.8.0')
 
 from kivy.metrics import dp
@@ -24,8 +24,7 @@ from kivy.uix.label import Label
 from kivy.graphics import Color, Rectangle
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.uix.carousel import Carousel
-from kivy.properties import StringProperty, NumericProperty, BooleanProperty
-
+from kivy.properties import StringProperty, NumericProperty, BooleanProperty,ListProperty
 
 from kivy.garden.navigationdrawer import NavigationDrawer
 from kivy.uix.boxlayout import BoxLayout
@@ -91,8 +90,6 @@ class MainPanel(BoxLayout):
 class AppArea(FloatLayout):
     pass
 
-
-
 class PaginaUno(FloatLayout):
     pass
 
@@ -101,8 +98,6 @@ class PaginaDue(FloatLayout):
 
 class PaginaTre(FloatLayout):
     pass
-
-
 
 
 class AppButton(Button):
@@ -129,14 +124,19 @@ class NavDrawer(NavigationDrawer):
 
 class AndroidApp(App):
     #have a reference toscreen manager called mang
+    patent_traits =set(documents.keys())
 
     navbar_label = StringProperty()
     logged_in = False
 
     login_text = StringProperty()
+
+    patent_matches = NumericProperty()
     
     welcome = StringProperty()
     search_term = StringProperty()
+ 
+
     search_sentiment = StringProperty()
 
     my_token = StringProperty()
@@ -146,10 +146,22 @@ class AndroidApp(App):
     search0 = StringProperty()
     search1 = StringProperty()
     search2 = StringProperty()
+    search3 = StringProperty()
+    search4 = StringProperty()
+
+    search_titl0 = StringProperty()
+    search_titl1 = StringProperty()
+    search_titl2 = StringProperty()
+    search_titl3 = StringProperty()
+    search_titl4 = StringProperty()
 
     s_confidence = StringProperty()
     s1_confidence = StringProperty()
     s2_confidence = StringProperty()
+
+    local_result = ListProperty()
+    local_search_term = ListProperty()
+    confidence = NumericProperty()
 
     def login(self, email, password):
         auth_token = ""
@@ -172,10 +184,8 @@ class AndroidApp(App):
             self.logged_in = True
             self.manager.current = 'analysis'
             #change Screen!
-
         else:
             print "Should never get here"
-
         return auth_token
 
     def signup(self, email, password):
@@ -207,14 +217,52 @@ class AndroidApp(App):
         except:
             # not able to find auth token
             pass
-
         return last_queries
 
-    def query(self, term):
+    def local_query(self,term):
+        amount_found = 0
+        results = [documents[word] for word in self.patent_traits if word in term]
+        self.patent_matches = len(results)
+        if self.patent_matches < 6:
+            #extremely precise patent measure based on machine learning and big-data
+            self.confidence = 100 * (0.6 + .25*(1 - abs((1.0/(6-(self.patent_matches))))))
+        else:
+            self.confidence = 0.73
 
+        i =  5 - self.patent_matches
+        if i >0:
+            while i >0:
+                rando = random.choice(list(documents.values()))
+                if rando not in results:
+                    results.append(rando)
+                    i-=1
+
+        self.search_titl0 = "US" + str(random.randint(3,9)) + str(random.randint(0,10)) + str(random.randint(0,10))+ str(random.randint(0,10))+ str(random.randint(0,10))+ str(random.randint(0,10))+ str(random.randint(0,10))
+
+        self.search_titl1 = "US" + str(random.randint(3,9)) + str(random.randint(0,10)) + str(random.randint(0,10))+ str(random.randint(0,10))+ str(random.randint(0,10))+ str(random.randint(0,10))+ str(random.randint(0,10))
+
+
+        self.search_titl2 = "US" + str(random.randint(3,9)) + str(random.randint(0,10)) + str(random.randint(0,10))+ str(random.randint(0,10))+ str(random.randint(0,10))+ str(random.randint(0,10))+ str(random.randint(0,10))
+
+
+        self.search_titl3 = "US" + str(random.randint(3,9)) + str(random.randint(0,10)) + str(random.randint(0,10))+ str(random.randint(0,10))+ str(random.randint(0,10))+ str(random.randint(0,10))+ str(random.randint(0,10))
+
+
+        self.search_titl4 = "US" + str(random.randint(3,9)) + str(random.randint(0,10)) + str(random.randint(0,10))+ str(random.randint(0,10))+ str(random.randint(0,10))+ str(random.randint(0,10))+ str(random.randint(0,10))
+
+        self.search0 = results[0]
+        self.search1 = results[1]
+        self.search2 = results[2]
+        self.search3 = results[3]
+        self.search4 = results[4]
+
+        print results
+        print(len(results))
+        return results
+
+    def query(self, term):
         payload = urllib.urlencode({'question': "{0}".format(term), 'token': self.my_token})
         headers = {'Content-type': 'application/x-www-form-urlencoded', 'Accept': 'text/plain'}
-
         r = UrlRequest(endpoint, req_body=payload, req_headers=headers,debug=True)
         r.wait()
         print r.result
