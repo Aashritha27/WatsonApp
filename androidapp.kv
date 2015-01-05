@@ -25,7 +25,7 @@
         ActionMenu:
 
             #color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725,1)
-            font_name: 'assets/JosefinSans-Regular.ttf'
+            font_name: 'assets/Josef-Regular.ttf'
             title: app.navbar_label
             with_previous: False
             app_icon: 'assets/side_menu_rectangles.png'
@@ -154,6 +154,7 @@
                     on_release: manager.transition = RiseInTransition()
                     on_release: app.manager = manager
                    # on_release: manager.current = 'analysis'
+
         Screen:
             name: 'analysis'
             FloatLayout:
@@ -239,7 +240,7 @@
                     background_down: 'assets/sea_blue_light.png'
                     text: 'Search recent'
                     font_size: '25dp'
-                    on_release: app.search_term = app.query(_searchterm.text)
+                    on_release: app.local_search_term = app.local_query(_searchTerm0.text)
                     on_release: manager.current = 'search_result'
 
         Screen:
@@ -287,7 +288,7 @@
                     font_size: '11dp'
 
                     background_down:'assets/fox_orange.png' 
-                    on_release: app.search_term = app.query(_searchTerm.text)
+                    on_release: app.local_search_term = app.local_query(_searchTerm0.text)
                     on_release: manager.current = 'search_result'
 
                 Label:
@@ -329,7 +330,7 @@
                     background_down: 'assets/sea_blue_light.png'
                     text: 'Search recent'
                     font_size: '25dp'
-                    on_release: app.search_term = app.query(_searchterm.text)
+                    on_release: app.local_search_term = app.local_query(_searchTerm0.text)
                     on_release: manager.current = 'search_result'
 
 
@@ -371,8 +372,6 @@
                         hint_text: 'Enter your patent description here.'
                         hint_text_color: (0.09019607843137255, 0.6078431372549019, 0.8627450980392157, 1.0)
 
-
-
                 Button:
 
                     pos_hint: {'x': .135, 'y': 0.7}
@@ -381,7 +380,7 @@
                     background_color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725,1)
                     text: 'Search'
                     font_size: '11dp'
-                    on_release: app.search_term = app.query(_searchTerm.text)
+                    on_release: app.local_search_term = app.local_query(_searchTerm0.text)
                     on_release: manager.current = 'search_result'
 
                 Label:
@@ -422,12 +421,8 @@
                     background_down: 'assets/sea_blue_light.png'
                     text: 'Search Recent'
                     font_size: '25dp'
-                    on_release: app.search_term = app.query(_searchterm.text)
+                    on_release: app.search_term = app.local_query(_searchTerm.text)
                     on_release: manager.current = 'search_result'
-
-
-
-
 
 
         Screen:
@@ -444,14 +439,14 @@
                 Label:
                     font_name: 'assets/Roboto-Light.ttf'
                     pos_hint: {'x': 0, 'y': 0.2}
-                    text: 'Patentability: Moderate'
-                    font_size: '28dp'
+                    text: 'Similar patents found.'
+                    font_size: '25dp'
                     bold: True
 
                 Label:
                     font_name: 'assets/Roboto-Thin.ttf'
                     pos_hint: {'x': 0, 'y': 0.15}
-                    text: 'Confidence: ' + str(app.confidence)[0:5] + "%"
+                    text: 'Review content before continuing'
                     font_size: '20dp'
                     bold: True
 
@@ -722,7 +717,6 @@
                             font_size: '18dp'
                             bold: True
 
-
                         Label:
                             pos_hint: {'x': 0, 'y': .25}
                             markup: True
@@ -739,8 +733,6 @@
                             text: 'Save this patent'
                             font_size: '11dp'
 
-
-
                 Button:
                     background_color:  (0.058823529, 0.458823529, 0.741176471, 1)
                     background_normal: ''
@@ -748,11 +740,6 @@
                     pos_hint: {'x': 0, 'y': 0}
                     text: 'Search again '
                     on_release: manager.current = 'analysis'
-
-
-
-
-      
 
         Screen:
             name: 'search_result_old'

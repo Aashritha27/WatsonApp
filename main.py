@@ -13,7 +13,8 @@ id_AppMenu_PANEL = 1
 #--------------------------------------------------------------------------
 import kivy
 import random
-kivy.require('1.8.0')
+import time
+#kivy.require('1.8.0')
 
 from kivy.metrics import dp
 
@@ -33,15 +34,14 @@ from kivy.uix.button import Button
 from kivy.uix.actionbar import ActionBar, ActionButton, ActionPrevious
 from kivy.properties import  ObjectProperty
 
-from kivy.network.urlrequest import UrlRequest
+#from kivy.network.urlrequest import UrlRequest
 
-import urllib
-
+#import urllib
 # patent dictionary
 from patents import *
 
-endpoint = 'http://calwatson.herokuapp.com/question'
-my_token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im9za2lfYmVhciIsInBhc3N3b3JkIjoicGFzc3dvcmQ3In0.I8Z0BPvf_9sb9kp19Tek1ZxC50Im1YebB-TE3Oc6Rps'
+#endpoint = 'http://calwatson.herokuapp.com/question'
+#my_token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im9za2lfYmVhciIsInBhc3N3b3JkIjoicGFzc3dvcmQ3In0.I8Z0BPvf_9sb9kp19Tek1ZxC50Im1YebB-TE3Oc6Rps'
 
 RootApp = None
 
@@ -135,8 +135,6 @@ class AndroidApp(App):
     
     welcome = StringProperty()
     search_term = StringProperty()
- 
-
     search_sentiment = StringProperty()
 
     my_token = StringProperty()
@@ -164,23 +162,18 @@ class AndroidApp(App):
     confidence = NumericProperty()
 
     def login(self, email, password):
+        time.sleep(.75)
         auth_token = ""
-        payload = urllib.urlencode({'email': email, 'password': password})
+        #payload = urllib.urlencode({'email': email, 'password': password})
         endpoint = "http://calwatson.herokuapp.com/users/sign_in"
         headers = {'Content-type': 'application/x-www-form-urlencoded', 'Accept': 'text/plain'}
-        r = UrlRequest(endpoint, req_body=payload, req_headers=headers,debug=True)
-        r.wait()
-        if r.result == "No user account exists for that customer":
-            self.login_text = r.result + '\n       Please create an account below.'
-            #self.manager.current = 'login_error' 
-            
-        elif r.result == "Incorrect password":
-            self.login_text = r.result
+        #r = UrlRequest(endpoint, req_body=payload, req_headers=headers,debug=True)
+        #r.wait()
 
-        elif r.result['auth_token'] != None:
+        if True:
             self.navbar_label = "Logged in as " + email
             self.login_text = 'Welcome!'
-            self.my_token = r.result['auth_token']
+            self.my_token = "tokentoek" #r.result['auth_token']
             self.logged_in = True
             self.manager.current = 'analysis'
             #change Screen!
@@ -190,9 +183,9 @@ class AndroidApp(App):
 
     def signup(self, email, password):
         payload = urllib.urlencode({'email': email, 'password': password})
-        endpoint = "http://calwatson.herokuapp.com/users/sign_up"
+        #endpoint = "http://calwatson.herokuapp.com/users/sign_up"
         headers = {'Content-type': 'application/x-www-form-urlencoded', 'Accept': 'text/plain'}
-        r = UrlRequest(endpoint, req_body=payload, req_headers=headers,debug=True)
+        #r = UrlRequest(endpoint, req_body=payload, req_headers=headers,debug=True)
         r.wait()
         if r.result == "Successful sign up":
             self.login_text = 'Welcome!'
@@ -220,6 +213,7 @@ class AndroidApp(App):
         return last_queries
 
     def local_query(self,term):
+        time.sleep(.5)
         amount_found = 0
         results = [documents[word] for word in self.patent_traits if word in term]
         self.patent_matches = len(results)
@@ -228,7 +222,6 @@ class AndroidApp(App):
             self.confidence = 100 * (0.6 + .25*(1 - abs((1.0/(6-(self.patent_matches))))))
         else:
             self.confidence = 0.73
-
         i =  5 - self.patent_matches
         if i >0:
             while i >0:
@@ -330,10 +323,8 @@ class AndroidApp(App):
 
 
     def build(self):
-
         global RootApp
         RootApp = self
-
         # NavigationDrawer
         self.navigationdrawer = NavDrawer()
         #self.navigationdrawer.side_panel_width = .2

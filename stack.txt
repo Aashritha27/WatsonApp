@@ -1,0 +1,12 @@
+textblob for text processing
+nltk, wordnet for word associations, synonyms
+    wordnet is a lexicaldatabase
+tfidf, could give it some sappy name like ifidf, (idea frequency) cfidf, (concept frequency),
+or maybe that's too lame. 
+    The idea is that we compute tfidf for the query terms, but considering all 
+    synonyms given by wornet. That'll change the computation, and will have a 
+    summation, and divide by the n synonyms probably, then the whole log stuff with regular tfidf.
+    -Will look fancy and mathematical for the business 
+    -will be accurate and good probably, I'll check it out.
+
+

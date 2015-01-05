@@ -1,0 +1,655 @@
+#:import RiseInTransition kivy.uix.screenmanager.RiseInTransition
+
+<Fox>:
+    usrnm: _usrnm
+    psswrd: _psswrd
+    orientation: 'vertical'
+    spacing: 1
+
+    ScreenManager:
+        id: manager
+        Screen:
+            name: 'landing'
+            FloatLayout:
+                rows: 15
+                canvas.before:
+
+                    Color:
+                        rgb: (0.00392156862745098,0.3568627450980392,0.49411764705882355)
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                Image:
+                    source: 'assets/fox_logo.png'
+                    mipmap: True
+                    pos_hint: {'x': .3, 'y': 0.6}
+                    size_hint: (0.4, 0.4)
+                    allow_stretch: True
+
+                Label:
+                    #font_name: 'assets/CODE Bold.otf'
+                    pos_hint: {'x': 0, 'y': .12}
+                    text: 'PATENT FOX'
+                    font_size: '40dp'
+
+                Label:
+                    #font_name: 'assets/JosefinSans-Regular.ttf'
+                    color: (0,0,0, 1)
+                    pos_hint: {'x': 0, 'y': 0.16}
+                    #text: 'Faster time to market.'
+                    font_size: '15dp'
+                Label:
+                    pos_hint: {'x': 0, 'y': 0.03}
+                    #font_name: 'assets/JosefinSans-Regular.ttf'
+                    text: root.login_text
+
+                GridLayout:
+                    pos_hint: {'x': 0.165, 'y': 0.4}
+                    size_hint: (0.66, 0.07)
+                    rows: 1
+
+                    TextInput:
+                        id: _usrnm
+                        font_size: '25dp'
+                        #font_name: 'assets/Roboto-Thin.ttf'
+                        background_normal: 'assets/sea_blue.png'
+                        background_active: 'assets/sea_blue_light.png'
+                        hint_text: 'Username'
+                        hint_text_color: (0.09019607843137255, 0.6078431372549019, 0.8627450980392157, 1.0)
+
+                GridLayout:
+                    pos_hint: {'x': 0.165, 'y': 0.3}
+                    size_hint: (0.66, 0.07)
+                    rows: 1
+
+                    TextInput:
+                        id: _psswrd
+                        font_size: '25dp'
+                        #font_name: 'assets/Roboto-Thin.ttf'
+                        background_normal: 'assets/sea_blue.png'
+                        background_active: 'assets/sea_blue_light.png'
+                        hint_text: 'Password'
+                        hint_text_color: (0.09019607843137255, 0.6078431372549019, 0.8627450980392157, 1.0)
+                        password: True
+     
+
+                Button:
+                    background_normal: 'assets/sea_blue.png'
+                    size_hint: (.5, 0.05)
+                    pos_hint: {'x': .25, 'y': 0.185}
+                    #font_name: 'assets/JosefinSans-Regular.ttf'
+                    font_size: '15dp'
+                    text: 'New? Create Account'
+                    on_release: manager.transition = RiseInTransition()
+                    on_release: root.manager = manager
+                    on_release: root.signup( _usrnm.text, _psswrd.text)
+                   # on_release: manager.current = 'analysis'
+
+                Button:
+                    background_color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725,1)
+                    background_normal: ''
+                    background_down:'assets/fox_orange.png' 
+                    size_hint: (1, 0.12)
+                    pos_hint: {'x': 0, 'y': 0}
+                    #font_name: 'assets/Roboto-Thin.ttf'
+                    font_size: '40dp'
+                    text: 'Sign in'
+                    on_release: root.login( _usrnm.text, _psswrd.text)
+                    on_release: manager.transition = RiseInTransition()
+                    on_release: root.manager = manager
+                   # on_release: manager.current = 'analysis'
+
+        Screen:
+            name: 'analysis'
+            FloatLayout:
+                rows: 15
+                canvas.before:
+                    Color:
+                        rgb: (0.00392156862745098,0.3568627450980392,0.49411764705882355)
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+                GridLayout:
+                    pos_hint: {'x': .135, 'y': 0.8}
+                    size_hint_x: .725
+                    size_hint_y: .075
+                    rows:1
+                    TextInput:
+                        id: _searchTerm0
+                        font_size: '13dp'
+                        #font_name: 'assets/Roboto-Light.ttf'
+                        background_normal: 'assets/sea_blue.png'
+                        background_active: 'assets/sea_blue_light.png'
+                        hint_text: 'Enter your patent description here.'
+                        hint_text_color: (0.09019607843137255, 0.6078431372549019, 0.8627450980392157, 1.0)
+
+                Button:
+                    pos_hint: {'x': .135, 'y': 0.7}
+                    size_hint: (0.725, 0.075)
+                    background_normal: ''
+                    background_color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725,1)
+                    background_down:'assets/fox_orange.png' 
+                    text: 'Search'
+                    font_size: '11dp'
+                    on_release: root.local_search_term = root.local_query(_searchTerm0.text)
+                    on_release: manager.current = 'search_result'
+
+                Label:
+                    #font_name: 'assets/Roboto-Light.ttf'
+                    pos_hint: {'x': 0, 'y': 0.085}
+                    text: '----  or  ----'
+                    font_size: '25dp'
+                    bold: True
+
+                Button:
+                    #font_name: 'assets/Roboto-Light.ttf'
+                    #color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725)
+                    pos_hint: {'x': .135, 'y': 0.4}
+                    size_hint: (0.725, 0.075)
+                    background_normal: 'assets/sea_blue.png'
+                    background_down: 'assets/sea_blue_light.png'
+                    text: 'Search by company'
+                    font_size: '25dp'
+                    on_release: manager.current='by_company'
+
+                Button:
+                    #color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725)
+                    #font_name: 'assets/Roboto-Light.ttf'
+                    pos_hint: {'x': .135, 'y': 0.25}
+                    size_hint: (0.725, 0.075)
+                    background_normal: 'assets/sea_blue.png'
+                    background_down: 'assets/sea_blue_light.png'
+                    text: 'Search by category'
+                    font_size: '25dp'
+                    on_release: manager.current='by_category'
+
+                Button:
+                    #font_name: 'assets/Roboto-Light.ttf'
+                    #color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725)
+                    pos_hint: {'x': .135, 'y': 0.1}
+                    size_hint: (0.725, 0.075)
+                    background_normal: 'assets/sea_blue.png'
+                    background_down: 'assets/sea_blue_light.png'
+                    text: 'Search recent'
+                    font_size: '25dp'
+                    on_release: root.local_search_term = root.local_query(_searchTerm0.text)
+                    on_release: manager.current = 'search_result'
+
+        Screen:
+            name: 'by_company'
+            FloatLayout:
+                rows: 15
+                canvas.before:
+                    Color:
+                        rgb: (0.00392156862745098,0.3568627450980392,0.49411764705882355)
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                ##Label:
+                #    #font_name: 'assets/timeburner_regular.ttf'
+                #    color: (0,0,0, 1)
+                #    pos_hint: {'x': 0, 'y': 0.23}
+                #    text: 'Step 1.'
+                #    font_size: '35dp'
+                #    bold: True
+
+                GridLayout:
+                    pos_hint: {'x': .135, 'y': 0.8}
+                    size_hint_x: .725
+                    size_hint_y: .075
+                    rows:1
+                    TextInput:
+                        id: _searchTerm
+                        font_size: '13dp'
+                        #font_name: 'assets/Roboto-Light.ttf'
+                        background_normal: 'assets/sea_blue.png'
+                        background_active: 'assets/sea_blue_light.png'
+                        hint_text: 'Enter your patent description here.'
+                        hint_text_color: (0.09019607843137255, 0.6078431372549019, 0.8627450980392157, 1.0)
+
+                Button:
+                    pos_hint: {'x': .135, 'y': 0.7}
+                    size_hint: (0.725, 0.075)
+                    background_normal: ''
+                    background_color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725,1)
+                    text: 'Search'
+                    font_size: '11dp'
+
+                    background_down:'assets/fox_orange.png' 
+                    on_release: root.local_search_term = root.local_query(_searchTerm0.text)
+                    on_release: manager.current = 'search_result'
+
+                Label:
+                    #font_name: 'assets/Roboto-Light.ttf'
+                    pos_hint: {'x': 0, 'y': 0.085}
+                    text: '----  or  ----'
+                    font_size: '25dp'
+                    bold: True
+
+                Button:
+                    #font_name: 'assets/Roboto-Light.ttf'
+                    #color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725)
+                    pos_hint: {'x': .135, 'y': 0.4}
+                    size_hint: (0.725, 0.075)
+                    background_normal: 'assets/sea_blue.png'
+                    background_down: 'assets/sea_blue_light.png'
+                    text: 'Search in Natural Language'
+                    font_size: '20dp'
+                    on_release: manager.current='analysis'
+
+                Button:
+                    #color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725)
+                    #font_name: 'assets/Roboto-Light.ttf'
+                    pos_hint: {'x': .135, 'y': 0.25}
+                    size_hint: (0.725, 0.075)
+                    background_normal: 'assets/sea_blue.png'
+                    background_down: 'assets/sea_blue_light.png'
+
+                    text: 'Search by category'
+                    font_size: '25dp'
+                    on_release: manager.current='by_category'
+
+                Button:
+                    #font_name: 'assets/Roboto-Light.ttf'
+                    #color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725)
+                    pos_hint: {'x': .135, 'y': 0.1}
+                    size_hint: (0.725, 0.075)
+                    background_normal: 'assets/sea_blue.png'
+                    background_down: 'assets/sea_blue_light.png'
+                    text: 'Search recent'
+                    font_size: '25dp'
+                    on_release: root.local_search_term = root.local_query(_searchTerm0.text)
+                    on_release: manager.current = 'search_result'
+
+
+        Screen:
+            name: 'by_category'
+            FloatLayout:
+                rows: 15
+                canvas.before:
+
+                    Color:
+                        rgb: (0.00392156862745098,0.3568627450980392,0.49411764705882355)
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+                GridLayout:
+
+                    pos_hint: {'x': .135, 'y': 0.8}
+                    size_hint_x: .725
+                    size_hint_y: .075
+                    rows:1
+                    TextInput:
+                        id: _searchTerm
+                        font_size: '13dp'
+                        #font_name: 'assets/Roboto-Light.ttf'
+                        background_normal: 'assets/sea_blue.png'
+                        background_active: 'assets/sea_blue_light.png'
+                        hint_text: 'Enter your patent description here.'
+                        hint_text_color: (0.09019607843137255, 0.6078431372549019, 0.8627450980392157, 1.0)
+
+                Button:
+
+                    pos_hint: {'x': .135, 'y': 0.7}
+                    size_hint: (0.725, 0.075)
+                    background_normal: ''
+                    background_color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725,1)
+                    text: 'Search'
+                    font_size: '11dp'
+                    on_release: root.local_search_term = root.local_query(_searchTerm0.text)
+                    on_release: manager.current = 'search_result'
+
+                Label:
+                    #font_name: 'assets/Roboto-Light.ttf'
+                    pos_hint: {'x': 0, 'y': 0.085}
+                    text: '----  or  ----'
+                    font_size: '25dp'
+                    bold: True
+
+                Button:
+                    #font_name: 'assets/Roboto-Light.ttf'
+                    #color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725)
+                    pos_hint: {'x': .135, 'y': 0.4}
+                    size_hint: (0.725, 0.075)
+                    background_normal: 'assets/sea_blue.png'
+                    background_down: 'assets/sea_blue_light.png'
+                    text: 'Search by company'
+                    font_size: '25dp'
+                    on_release: manager.current='by_company'
+
+                Button:
+                    #color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725)
+                    #font_name: 'assets/Roboto-Light.ttf'
+                    pos_hint: {'x': .135, 'y': 0.25}
+                    size_hint: (0.725, 0.075)
+                    background_normal: 'assets/sea_blue.png'
+                    background_down: 'assets/sea_blue_light.png'
+                    text: 'Search in Natural Language'
+                    font_size: '20dp'
+                    on_release: manager.current = 'analysis'
+
+                Button:
+                    #font_name: 'assets/Roboto-Light.ttf'
+                    #color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725)
+                    pos_hint: {'x': .135, 'y': 0.1}
+                    size_hint: (0.725, 0.075)
+                    background_normal: 'assets/sea_blue.png'
+                    background_down: 'assets/sea_blue_light.png'
+                    text: 'Search Recent'
+                    font_size: '25dp'
+                    on_release: root.search_term = root.local_query(_searchTerm.text)
+                    on_release: manager.current = 'search_result'
+
+        Screen:
+            name: 'search_result'
+            FloatLayout:
+                rows: 15
+                canvas.before:
+                    Color:
+                        rgb: (0.00392156862745098,0.3568627450980392,0.49411764705882355)
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+                Label:
+                    #font_name: 'assets/Roboto-Light.ttf'
+                    pos_hint: {'x': 0, 'y': 0.2}
+                    text: '5 similar patents found'
+                    font_size: '25dp'
+
+                Label:
+                    #font_name: 'assets/Roboto-Thin.ttf'
+                    pos_hint: {'x': 0, 'y': 0.15}
+                    text: 'Review evidence before proceeding'
+                    font_size: '20dp'
+
+                Button:
+                    pos_hint: {'x': .2, 'y': 0.2}
+                    size_hint: (0.6, 0.17)
+                    background_normal: ''
+                    background_color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725,1)
+                    text: 'View evidence'
+                    font_size: '24dp'
+                    background_down:'assets/fox_orange.png' 
+                    on_release: manager.current = 'evidence'
+
+                Button:
+                    background_color:  (0.058823529, 0.458823529, 0.741176471, 1)
+                    background_normal: ''
+                    size_hint: (1, 0.05)
+                    pos_hint: {'x': 0, 'y': 0}
+                    text: 'Search again'
+                    on_release: manager.current = 'analysis'
+
+        Screen:
+            name: 'evidence'
+            FloatLayout:
+                rows: 15
+                canvas.before:
+                    Color:
+                        rgb: (0.00392156862745098,0.3568627450980392,0.49411764705882355)
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+                Carousel:
+                    id: cad1
+                    fullscreen: True
+                    loop: True
+             
+
+                    Screen:
+                        name: 'res1'
+                        FloatLayout:
+                            rows: 15
+                            canvas.before:
+                                Color:
+                                    rgb: (0.00392156862745098,0.3568627450980392,0.49411764705882355)
+                                Rectangle:
+                                    pos: self.pos
+                                    size: self.size
+                        Label:
+                            #font_name: 'assets/Roboto-Light.ttf'
+                            pos_hint: {'x': 0, 'y': 0.4}
+                            text: 'Patent ID: '  + root.search_titl0
+                            font_size: '18dp'
+                            bold: True
+
+                        Label:
+                            #font_name: 'assets/Roboto-Light.ttf'
+                            pos_hint: {'x': 0, 'y': 0.35}
+                            text: 'Similarity rank: 1'
+                            font_size: '18dp'
+                            bold: True
+
+                        Label:
+                            #font_name: 'assets/Roboto-Light.ttf'
+                            pos_hint: {'x': 0, 'y': 0.3}
+                            text: 'Abstract:'
+                            font_size: '18dp'
+                            bold: True
+
+
+                        Label:
+                            pos_hint: {'x': 0, 'y': .25}
+                            markup: True
+                            text_size: (self.size[0] * .6, self.size[1])
+                            bold: True
+                            text: root.search0
+                            font_size: '11dp'
+
+                        Button:
+                            pos_hint: {'x': .2, 'y': 0.1}
+                            size_hint: (0.6, 0.05)
+                            background_normal: ''
+                            background_color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725,1)
+                            text: 'Save this patent'
+                            font_size: '11dp'
+
+
+
+
+
+                    Screen:
+                        name: 'res2'
+                        FloatLayout:
+                            rows: 15
+                            canvas.before:
+                                Color:
+                                    rgb: (0.00392156862745098,0.3568627450980392,0.49411764705882355)
+                                Rectangle:
+                                    pos: self.pos
+                                    size: self.size
+                        Label:
+                            #font_name: 'assets/Roboto-Light.ttf'
+                            pos_hint: {'x': 0, 'y': 0.4}
+                            text: 'Patent ID: '  + root.search_titl1
+                            font_size: '18dp'
+                            bold: True
+
+                        Label:
+                            #font_name: 'assets/Roboto-Light.ttf'
+                            pos_hint: {'x': 0, 'y': 0.35}
+                            text: 'Similarity rank: 2'
+                            font_size: '18dp'
+                            bold: True
+
+                        Label:
+                            #font_name: 'assets/Roboto-Light.ttf'
+                            pos_hint: {'x': 0, 'y': 0.3}
+                            text: 'Abstract:'
+                            font_size: '18dp'
+                            bold: True
+
+
+                        Label:
+                            pos_hint: {'x': 0, 'y': .25}
+                            markup: True
+                            text_size: (self.size[0] * .6, self.size[1])
+                            bold: True
+                            text: root.search1
+                            font_size: '11dp'
+
+                        Button:
+                            pos_hint: {'x': .2, 'y': 0.1}
+                            size_hint: (0.6, 0.05)
+                            background_normal: ''
+                            background_color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725,1)
+                            text: 'Save this patent'
+                            font_size: '11dp'
+
+
+                    Screen:
+                        name: 'res3'
+                        FloatLayout:
+                            rows: 15
+                            canvas.before:
+                                Color:
+                                    rgb: (0.00392156862745098,0.3568627450980392,0.49411764705882355)
+                                Rectangle:
+                                    pos: self.pos
+                                    size: self.size
+                        Label:
+                            #font_name: 'assets/Roboto-Light.ttf'
+                            pos_hint: {'x': 0, 'y': 0.4}
+                            text: 'Patent ID: '  + root.search_titl2
+                            font_size: '18dp'
+                            bold: True
+
+                        Label:
+                            #font_name: 'assets/Roboto-Light.ttf'
+                            pos_hint: {'x': 0, 'y': 0.35}
+                            text: 'Similarity rank: 3'
+                            font_size: '18dp'
+                            bold: True
+
+                        Label:
+                            #font_name: 'assets/Roboto-Light.ttf'
+                            pos_hint: {'x': 0, 'y': 0.3}
+                            text: 'Abstract:'
+                            font_size: '18dp'
+                            bold: True
+
+
+                        Label:
+                            pos_hint: {'x': 0, 'y': .25}
+                            markup: True
+                            text_size: (self.size[0] * .6, self.size[1])
+                            bold: True
+                            text: root.search2
+                            font_size: '11dp'
+
+                        Button:
+                            pos_hint: {'x': .2, 'y': 0.1}
+                            size_hint: (0.6, 0.05)
+                            background_normal: ''
+                            background_color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725,1)
+                            text: 'Save this patent'
+                            font_size: '11dp'
+
+
+
+
+                    Screen:
+                        name: 'res4'
+                        FloatLayout:
+                            rows: 15
+                            canvas.before:
+                                Color:
+                                    rgb: (0.00392156862745098,0.3568627450980392,0.49411764705882355)
+                                Rectangle:
+                                    pos: self.pos
+                                    size: self.size
+                        Label:
+                            #font_name: 'assets/Roboto-Light.ttf'
+                            pos_hint: {'x': 0, 'y': 0.4}
+                            text: 'Patent ID: '  + root.search_titl3
+                            font_size: '18dp'
+                            bold: True
+
+                        Label:
+                            #font_name: 'assets/Roboto-Light.ttf'
+                            pos_hint: {'x': 0, 'y': 0.35}
+                            text: 'Similarity rank: 4'
+                            font_size: '18dp'
+                            bold: True
+
+                        Label:
+                            #font_name: 'assets/Roboto-Light.ttf'
+                            pos_hint: {'x': 0, 'y': 0.3}
+                            text: 'Abstract:'
+                            font_size: '18dp'
+                            bold: True
+
+
+                        Label:
+                            pos_hint: {'x': 0, 'y': .25}
+                            markup: True
+                            text_size: (self.size[0] * .6, self.size[1])
+                            bold: True
+                            text: root.search3
+                            font_size: '11dp'
+
+                        Button:
+                            pos_hint: {'x': .2, 'y': 0.1}
+                            size_hint: (0.6, 0.05)
+                            background_normal: ''
+                            background_color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725,1)
+                            text: 'Save this patent'
+                            font_size: '11dp'
+
+                    Screen:
+                        name: 'res5'
+                        FloatLayout:
+                            rows: 15
+                            canvas.before:
+                                Color:
+                                    rgb: (0.00392156862745098,0.3568627450980392,0.49411764705882355)
+                                Rectangle:
+                                    pos: self.pos
+                                    size: self.size
+                        Label:
+                            #font_name: 'assets/Roboto-Light.ttf'
+                            pos_hint: {'x': 0, 'y': 0.4}
+                            text: 'Patent ID: '  + root.search_titl4
+                            font_size: '18dp'
+                            bold: True
+
+                        Label:
+                            #font_name: 'assets/Roboto-Light.ttf'
+                            pos_hint: {'x': 0, 'y': 0.35}
+                            text: 'Similarity rank: 5'
+                            font_size: '18dp'
+                            bold: True
+
+                        Label:
+                            #font_name: 'assets/Roboto-Light.ttf'
+                            pos_hint: {'x': 0, 'y': 0.3}
+                            text: 'Abstract:'
+                            font_size: '18dp'
+                            bold: True
+
+                        Label:
+                            pos_hint: {'x': 0, 'y': .25}
+                            markup: True
+                            text_size: (self.size[0] * .6, self.size[1])
+                            bold: True
+                            text: root.search4
+                            font_size: '11dp'
+
+                        Button:
+                            pos_hint: {'x': .2, 'y': 0.1}
+                            size_hint: (0.6, 0.05)
+                            background_normal: ''
+                            background_color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725,1)
+                            text: 'Save this patent'
+                            font_size: '11dp'
+
+                Button:
+                    background_color:  (0.058823529, 0.458823529, 0.741176471, 1)
+                    background_normal: ''
+                    size_hint: (1, 0.05)
+                    pos_hint: {'x': 0, 'y': 0}
+                    text: 'Search again '
+                    on_release: manager.current = 'analysis'

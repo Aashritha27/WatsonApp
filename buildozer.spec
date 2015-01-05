@@ -1,10 +1,10 @@
 [app]
 
 # (str) Title of your application
-title = vYou
+title = PatentFox
 
 # (str) Package name
-package.name = WhatSon
+package.name = PatentFox
 
 # (str) Package domain (needed for android/ios packaging)
 package.domain = org.test
@@ -13,7 +13,7 @@ package.domain = org.test
 source.dir = .
 
 # (list) Source files to include (let empty to include all the files)
-source.include_exts = py,png,jpg,kv,atlas,ttf
+source.include_exts = py,png,jpg,kv,atlas,otf,ttf
 
 # (list) Source files to exclude (let empty to not exclude anything)
 #source.exclude_exts = spec
@@ -25,33 +25,37 @@ source.include_exts = py,png,jpg,kv,atlas,ttf
 #source.exclude_patterns = license,images/*/*.jpg
 
 # (str) Application versioning (method 1)
+#version.regex = __version__ = ['"](.*)['"]
+#version.filename = %(source.dir)s/main.py
+
 # (str) Application versioning (method 2)
 version = 1.2.0
 
 # (list) Application requirements
+# comma seperated e.g. requirements = sqlite3,kivy
 requirements = kivy
 
 # (list) Garden requirements
-#garden_requirements =
+#garden_requirements = navigationdrawer
 
 # (str) Presplash of the application
-#presplash.filename = %(source.dir)s/data/presplash.png
-
+presplash.filename = %(source.dir)s/assets/fox_logo_splash.png 
 # (str) Icon of the application
-#icon.filename = %(source.dir)s/data/icon.png
+icon.filename = %(source.dir)s/assets/fox_logo.png
 
 # (str) Supported orientation (one of landscape, portrait or all)
-orientation = all
+orientation = portrait
 
 # (bool) Indicate if the application should be fullscreen or not
 fullscreen = 1
+
 
 #
 # Android specific
 #
 
 # (list) Permissions
-android.permissions = INTERNET
+#android.permissions = INTERNET
 
 # (int) Android API to use
 #android.api = 14
@@ -60,7 +64,7 @@ android.permissions = INTERNET
 #android.minapi = 8
 
 # (int) Android SDK version to use
-#android.sdk = 21
+android.sdk = 21
 
 # (str) Android NDK version to use
 #android.ndk = 9c
@@ -140,6 +144,9 @@ android.permissions = INTERNET
 
 # (int) Log level (0 = error only, 1 = info, 2 = debug (with command output))
 log_level = 1
+
+# (int) Display warning if buildozer is run as root (0 = False, 1 = True)
+warn_on_root = 1
 
 
 # -----------------------------------------------------------------------------
