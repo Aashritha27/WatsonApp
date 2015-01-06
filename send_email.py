@@ -12,9 +12,11 @@ if __name__ == "__main__":
     fromaddr = 'patentfoxibm@gmail.com'
     toaddr  = 'oski@berkeley.edu'
     msg = "\r\n".join([
-      "Subject: Patent Fox Team",
+      "Subject: Your Saved Patent",
       "",
-      "Hello email world"
+        "Hello Oski! \n\n", "You saved a patent using the Patent Fox app.\n",
+        "Here is the link: \n",
+       "https://drive.google.com/viewerng/viewer?url=patentimages.storage.googleapis.com/pdfs/US6477117.pdf"
       ])
 
     username = 'patentfoxibm@gmail.com'

@@ -71,11 +71,13 @@ class AppActionBar(ActionBar):
 
 class ActionMenu(ActionPrevious):
     def menu(self):
+        pass
+        """
         if RootApp.logged_in:
             RootApp.toggle_sidepanel()
         else:
             RootApp.login_text = "Please login to continue." 
-
+        """
 
 class ActionQuit(ActionButton):
     pass
