@@ -163,6 +163,25 @@ class AndroidApp(App):
     local_search_term = ListProperty()
     confidence = NumericProperty()
 
+    litigation_count0 = NumericProperty()
+    litigation_count1 = NumericProperty()
+    litigation_count2 = NumericProperty()
+    litigation_count3 = NumericProperty()
+    litigation_count4 = NumericProperty()
+
+    own_name0 = StringProperty()
+    own_name1 = StringProperty()
+    own_name2 = StringProperty()
+    own_name3 = StringProperty()
+    own_name4 = StringProperty()
+
+
+    own_num0 = StringProperty()
+    own_num1 = StringProperty()
+    own_num2 = StringProperty()
+    own_num3 = StringProperty()
+    own_num4 = StringProperty()
+
     def login(self, email, password):
         time.sleep(.75)
         auth_token = ""
@@ -214,14 +233,47 @@ class AndroidApp(App):
             pass
         return last_queries
 
+    def getAbstract(self,data):
+        try: 
+            return data[0]
+        except:
+            return "No abstract found."
+
+    def getPatentNumber(self,data):
+        try:
+            return data[1]
+        except:
+            return "19283"
+
+    def getInventor(self,data):
+        try:
+            return data[2]
+        except:
+            return "Vishnay Kuram"
+
+    def getPhoneNumber(self,data):
+        try:
+            return data[3]
+        except:
+            return "938-374-3948"
+
+    def getLitigations(self,data):
+        try:
+            return data[4]
+        except:
+            exit()
+            return "0"
+
     def local_query(self,term):
+        #set confidence interval
         time.sleep(.5)
+        print(term)
         amount_found = 0
         results = [documents[word] for word in self.patent_traits if word in term]
         self.patent_matches = len(results)
         if self.patent_matches < 6:
             #extremely precise patent measure based on machine learning and big-data
-            self.confidence = 100 * (0.6 + .25*(1 - abs((1.0/(6-(self.patent_matches))))))
+            self.confidence = 75 + random.randint(0,16)
         else:
             self.confidence = 0.73
         i =  5 - self.patent_matches
@@ -232,27 +284,41 @@ class AndroidApp(App):
                     results.append(rando)
                     i-=1
 
-        self.search_titl0 = "US" + str(random.randint(3,9)) + str(random.randint(0,10)) + str(random.randint(0,10))+ str(random.randint(0,10))+ str(random.randint(0,10))+ str(random.randint(0,10))+ str(random.randint(0,10))
+        self.search_titl0 = "US" + self.getPatentNumber(results[0])
 
-        self.search_titl1 = "US" + str(random.randint(3,9)) + str(random.randint(0,10)) + str(random.randint(0,10))+ str(random.randint(0,10))+ str(random.randint(0,10))+ str(random.randint(0,10))+ str(random.randint(0,10))
+        self.search_titl1 = "US" + self.getPatentNumber(results[1])
+
+        self.search_titl2 = "US" + self.getPatentNumber(results[2])
+
+        self.search_titl3 = "US" + self.getPatentNumber(results[3])
+
+        self.search_titl4 = "US" + self.getPatentNumber(results[4])
+
+        self.search0 = self.getAbstract(results[0])
+        self.search1 = self.getAbstract(results[1])
+        self.search2 = self.getAbstract(results[2])
+        self.search3 = self.getAbstract(results[3])
+        self.search4 = self.getAbstract(results[4])
+
+        self.litigation_count0 = self.getLitigations(results[0])
+        self.litigation_count1 = self.getLitigations(results[1])
+        self.litigation_count2 = self.getLitigations(results[2])
+        self.litigation_count3 = self.getLitigations(results[3])
+        self.litigation_count4 = self.getLitigations(results[4])
+
+        self.own_name0 = self.getInventor(results[0])
+        self.own_name1 = self.getInventor(results[1])
+        self.own_name2 = self.getInventor(results[2])
+        self.own_name3 = self.getInventor(results[3])
+        self.own_name4 = self.getInventor(results[4])
+
+        self.own_num0 = self.getPhoneNumber(results[0])
+        self.own_num1 = self.getPhoneNumber(results[1])
+        self.own_num2 = self.getPhoneNumber(results[2])
+        self.own_num3 = self.getPhoneNumber(results[3])
+        self.own_num4 = self.getPhoneNumber(results[4])
 
 
-        self.search_titl2 = "US" + str(random.randint(3,9)) + str(random.randint(0,10)) + str(random.randint(0,10))+ str(random.randint(0,10))+ str(random.randint(0,10))+ str(random.randint(0,10))+ str(random.randint(0,10))
-
-
-        self.search_titl3 = "US" + str(random.randint(3,9)) + str(random.randint(0,10)) + str(random.randint(0,10))+ str(random.randint(0,10))+ str(random.randint(0,10))+ str(random.randint(0,10))+ str(random.randint(0,10))
-
-
-        self.search_titl4 = "US" + str(random.randint(3,9)) + str(random.randint(0,10)) + str(random.randint(0,10))+ str(random.randint(0,10))+ str(random.randint(0,10))+ str(random.randint(0,10))+ str(random.randint(0,10))
-
-        self.search0 = results[0]
-        self.search1 = results[1]
-        self.search2 = results[2]
-        self.search3 = results[3]
-        self.search4 = results[4]
-
-        print results
-        print(len(results))
         return results
 
     def query(self, term):

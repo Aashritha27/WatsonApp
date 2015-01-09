@@ -46,7 +46,8 @@
         canvas.before:
 
             Color:
-                rgb: (0.9,0.9,0.9)
+                rgb: (1.0, 0.9254901960784314, 0.8196078431372549)
+
                 #rgb:(0.9372549019607843, 0.8666666666666667, 0.796078431372549)
 
             Rectangle:
@@ -55,7 +56,6 @@
 
         Image:
             source: 'assets/phone.png'
-
 
         ScreenManager:
             id: manager
@@ -76,12 +76,12 @@
                         Rectangle:
                             pos: self.pos
                             size: self.size
-
                    # Image:
                    #     source: 'assets/berk_back.png'
                    #     allow_stretch: True
                    #     pos_hint: { 'x': -.2, 'y': 0}
                    #     size_hint: (1.3, 1.3)
+
                     Image:
                         source: 'assets/fox_logo.png'
                         mipmap: True
@@ -218,7 +218,7 @@
                         text: 'Search'
                         font_size: '11dp'
                         on_release: app.local_search_term = app.local_query(_searchTerm0.text)
-                        on_release: manager.current = 'search_result'
+                        on_release: manager.current = 'evidence'
 
                     Label:
                         font_name: 'assets/Roboto-Light.ttf'
@@ -259,7 +259,7 @@
                         text: 'Search recent'
                         font_size: '25dp'
                         on_release: app.local_search_term = app.local_query(_searchTerm0.text)
-                        on_release: manager.current = 'search_result'
+                        on_release: manager.current = 'evidence'
 
             Screen:
                 name: 'by_company'
@@ -307,7 +307,7 @@
 
                         background_down:'assets/fox_orange.png' 
                         on_release: app.local_search_term = app.local_query(_searchTerm0.text)
-                        on_release: manager.current = 'search_result'
+                        on_release: manager.current = 'evidence'
 
                     Label:
                         font_name: 'assets/Roboto-Light.ttf'
@@ -349,7 +349,7 @@
                         text: 'Search recent'
                         font_size: '20dp'
                         on_release: app.local_search_term = app.local_query(_searchTerm0.text)
-                        on_release: manager.current = 'search_result'
+                        on_release: manager.current = 'evidence'
 
 
             Screen:
@@ -399,7 +399,7 @@
                         text: 'Search'
                         font_size: '7dp'
                         on_release: app.local_search_term = app.local_query(_searchTerm0.text)
-                        on_release: manager.current = 'search_result'
+                        on_release: manager.current = 'evidence'
 
                     Label:
                         font_name: 'assets/Roboto-Light.ttf'
@@ -488,6 +488,446 @@
                         on_release: manager.current = 'analysis'
 
             Screen:
+                name: 'CONT'
+                FloatLayout:
+                    rows: 15
+                    canvas.before:
+                        Color:
+                            rgb: (0.00392156862745098,0.3568627450980392,0.49411764705882355)
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+
+                Label:
+                    pos_hint: {'x': 0, 'y': 0}
+                    text: "Contact Name"
+                    font_size: '20dp'
+
+                Label:
+                    pos_hint: {'x': 0, 'y': -0.07}
+                    text: app.own_name0
+                    font_size: '18dp'
+
+                Label:
+                    pos_hint: {'x': 0, 'y': -0.15}
+                    text: 'app.own_num0'
+                
+
+                Button:
+                    background_color:  (0.058823529, 0.458823529, 0.741176471, 1)
+                    background_normal: ''
+                    size_hint: (1, 0.05)
+                    pos_hint: {'x': 0, 'y': 0}
+                    text: 'Return'
+                    on_release: manager.current = 'evidence'
+
+                Button:
+                    background_color:  (0.058823529, 0.858823529, 0.741176471, 1)
+                    background_normal: ''
+                    size_hint: (1, 0.1)
+                    pos_hint: {'x': 0, 'y': .1}
+                    text: 'CALL'
+
+
+
+            Screen:
+                name: 'POO'
+                FloatLayout:
+                    rows: 15
+                    canvas.before:
+                        Color:
+                            rgb: (0.00392156862745098,0.3568627450980392,0.49411764705882355)
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                Image:
+                    source: 'assets/litigation_stat.png'
+                    pos_hint: {'x': .1, 'y': 0.4}
+                    size_hint: (0.8, 0.8)
+                    allow_stretch: True
+
+                Label:
+                    pos_hint: {'x': 0, 'y': 0}
+                    text: "Relevant Cases"
+                    font_size: '20dp'
+
+                Label:
+                    pos_hint: {'x': 0, 'y': -0.07}
+                    text: str(app.litigation_count0)
+                    font_size: '25dp'
+
+                Label:
+                    pos_hint: {'x': 0, 'y': -0.15}
+                    text: 'Low Litigation Associated'
+                
+
+                Button:
+                    background_color:  (0.058823529, 0.458823529, 0.741176471, 1)
+                    background_normal: ''
+                    size_hint: (1, 0.05)
+                    pos_hint: {'x': 0, 'y': 0}
+                    text: 'Return'
+                    on_release: manager.current = 'evidence'
+
+
+ 
+
+
+            Screen:
+                name: 'CONT1'
+                FloatLayout:
+                    rows: 15
+                    canvas.before:
+                        Color:
+                            rgb: (0.00392156862745098,0.3568627450980392,0.49411764705882355)
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+
+                Label:
+                    pos_hint: {'x': 0, 'y': 0}
+                    text: "Contact Name"
+                    font_size: '20dp'
+
+                Label:
+                    pos_hint: {'x': 0, 'y': -0.07}
+                    text: app.own_name1
+                    font_size: '18dp'
+
+ 
+                Button:
+                    background_color:  (0.058823529, 0.858823529, 0.741176471, 1)
+                    background_normal: ''
+                    size_hint: (1, 0.1)
+                    pos_hint: {'x': 0, 'y': .4}
+                    text: 'CALL'
+
+               
+
+                Button:
+                    background_color:  (0.058823529, 0.458823529, 0.741176471, 1)
+                    background_normal: ''
+                    size_hint: (1, 0.05)
+                    pos_hint: {'x': 0, 'y': 0}
+                    text: 'Return'
+                    on_release: manager.current = 'evidence'
+
+
+            Screen:
+                name: 'POO1'
+                FloatLayout:
+                    rows: 15
+                    canvas.before:
+                        Color:
+                            rgb: (0.00392156862745098,0.3568627450980392,0.49411764705882355)
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                Image:
+                    source: 'assets/litigation_stat.png'
+                    pos_hint: {'x': .1, 'y': 0.4}
+                    size_hint: (0.8, 0.8)
+                    allow_stretch: True
+
+                Label:
+                    pos_hint: {'x': 0, 'y': 0}
+                    text: "Relevant Cases"
+                    font_size: '20dp'
+
+                Label:
+                    pos_hint: {'x': 0, 'y': -0.07}
+                    text: str(app.litigation_count1)
+                    font_size: '25dp'
+
+                Label:
+                    pos_hint: {'x': 0, 'y': -0.15}
+                    text: 'Low Litigation Associated'
+                
+
+                Button:
+                    background_color:  (0.058823529, 0.458823529, 0.741176471, 1)
+                    background_normal: ''
+                    size_hint: (1, 0.05)
+                    pos_hint: {'x': 0, 'y': 0}
+                    text: 'Return'
+                    on_release: manager.current = 'evidence'
+
+
+
+
+
+
+
+            Screen:
+                name: 'CONT2'
+                FloatLayout:
+                    rows: 15
+                    canvas.before:
+                        Color:
+                            rgb: (0.00392156862745098,0.3568627450980392,0.49411764705882355)
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+
+                Label:
+                    pos_hint: {'x': 0, 'y': 0}
+                    text: "Contact Name"
+                    font_size: '20dp'
+
+                Label:
+                    pos_hint: {'x': 0, 'y': -0.07}
+                    text: app.own_name2
+                    font_size: '18dp'
+
+                Label:
+                    pos_hint: {'x': 0, 'y': -0.15}
+                    text: app.own_num2
+                
+
+                Button:
+                    background_color:  (0.058823529, 0.458823529, 0.741176471, 1)
+                    background_normal: ''
+                    size_hint: (1, 0.05)
+                    pos_hint: {'x': 0, 'y': 0}
+                    text: 'Return'
+                    on_release: manager.current = 'evidence'
+
+
+                Button:
+                    background_color:  (0.058823529, 0.858823529, 0.741176471, 1)
+                    background_normal: ''
+                    size_hint: (1, 0.1)
+                    pos_hint: {'x': 0, 'y': .1}
+                    text: 'CALL'
+
+
+
+            Screen:
+                name: 'POO2'
+                FloatLayout:
+                    rows: 15
+                    canvas.before:
+                        Color:
+                            rgb: (0.00392156862745098,0.3568627450980392,0.49411764705882355)
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                Image:
+                    source: 'assets/litigation_stat.png'
+                    pos_hint: {'x': .1, 'y': 0.4}
+                    size_hint: (0.8, 0.8)
+                    allow_stretch: True
+
+                Label:
+                    pos_hint: {'x': 0, 'y': 0}
+                    text: "Relevant Cases"
+                    font_size: '20dp'
+
+                Label:
+                    pos_hint: {'x': 0, 'y': -0.07}
+                    text: str(app.litigation_count2)
+                    font_size: '25dp'
+
+                Label:
+                    pos_hint: {'x': 0, 'y': -0.15}
+                    text: 'Low Litigation Associated'
+                
+
+                Button:
+                    background_color:  (0.058823529, 0.458823529, 0.741176471, 1)
+                    background_normal: ''
+                    size_hint: (1, 0.05)
+                    pos_hint: {'x': 0, 'y': 0}
+                    text: 'Return'
+                    on_release: manager.current = 'evidence'
+
+
+
+
+
+
+
+
+            Screen:
+                name: 'CONT3'
+                FloatLayout:
+                    rows: 15
+                    canvas.before:
+                        Color:
+                            rgb: (0.00392156862745098,0.3568627450980392,0.49411764705882355)
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+
+                Label:
+                    pos_hint: {'x': 0, 'y': 0}
+                    text: "Contact Name"
+                    font_size: '20dp'
+
+                Label:
+                    pos_hint: {'x': 0, 'y': -0.07}
+                    text: app.own_name3
+                    font_size: '18dp'
+
+                Label:
+                    pos_hint: {'x': 0, 'y': -0.15}
+                    text: app.own_num3
+                
+
+                Button:
+                    background_color:  (0.058823529, 0.458823529, 0.741176471, 1)
+                    background_normal: ''
+                    size_hint: (1, 0.05)
+                    pos_hint: {'x': 0, 'y': 0}
+                    text: 'Return'
+                    on_release: manager.current = 'evidence'
+
+
+                Button:
+                    background_color:  (0.058823529, 0.858823529, 0.741176471, 1)
+                    background_normal: ''
+                    size_hint: (1, 0.1)
+                    pos_hint: {'x': 0, 'y': .1}
+                    text: 'CALL'
+
+
+
+            Screen:
+                name: 'POO3'
+                FloatLayout:
+                    rows: 15
+                    canvas.before:
+                        Color:
+                            rgb: (0.00392156862745098,0.3568627450980392,0.49411764705882355)
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                Image:
+                    source: 'assets/litigation_stat.png'
+                    pos_hint: {'x': .1, 'y': 0.4}
+                    size_hint: (0.8, 0.8)
+                    allow_stretch: True
+
+                Label:
+                    pos_hint: {'x': 0, 'y': 0}
+                    text: "Relevant Cases"
+                    font_size: '20dp'
+
+                Label:
+                    pos_hint: {'x': 0, 'y': -0.07}
+                    text: str(app.litigation_count3)
+                    font_size: '25dp'
+
+                Label:
+                    pos_hint: {'x': 0, 'y': -0.15}
+                    text: 'Low Litigation Associated'
+                
+
+                Button:
+                    background_color:  (0.058823529, 0.458823529, 0.741176471, 1)
+                    background_normal: ''
+                    size_hint: (1, 0.05)
+                    pos_hint: {'x': 0, 'y': 0}
+                    text: 'Return'
+                    on_release: manager.current = 'evidence'
+
+
+
+
+
+
+
+
+
+            Screen:
+                name: 'CONT4'
+                FloatLayout:
+                    rows: 15
+                    canvas.before:
+                        Color:
+                            rgb: (0.00392156862745098,0.3568627450980392,0.49411764705882355)
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+
+                Label:
+                    pos_hint: {'x': 0, 'y': 0}
+                    text: "Contact Name"
+                    font_size: '20dp'
+
+                Label:
+                    pos_hint: {'x': 0, 'y': -0.07}
+                    text: app.own_name4
+                    font_size: '18dp'
+
+                Label:
+                    pos_hint: {'x': 0, 'y': -0.15}
+                    text: app.own_num4
+                
+
+                Button:
+                    background_color:  (0.058823529, 0.458823529, 0.741176471, 1)
+                    background_normal: ''
+                    size_hint: (1, 0.05)
+                    pos_hint: {'x': 0, 'y': 0}
+                    text: 'Return'
+                    on_release: manager.current = 'evidence'
+
+
+                Button:
+                    background_color:  (0.058823529, 0.858823529, 0.741176471, 1)
+                    background_normal: ''
+                    size_hint: (1, 0.1)
+                    pos_hint: {'x': 0, 'y': .1}
+                    text: 'CALL'
+
+
+            Screen:
+                name: 'POO4'
+                FloatLayout:
+                    rows: 15
+                    canvas.before:
+                        Color:
+                            rgb: (0.00392156862745098,0.3568627450980392,0.49411764705882355)
+                        Rectangle:
+                            pos: self.pos
+                            size: self.size
+                Image:
+                    source: 'assets/litigation_stat.png'
+                    pos_hint: {'x': .1, 'y': 0.4}
+                    size_hint: (0.8, 0.8)
+                    allow_stretch: True
+
+                Label:
+                    pos_hint: {'x': 0, 'y': 0}
+                    text: "Relevant Cases"
+                    font_size: '20dp'
+
+                Label:
+                    pos_hint: {'x': 0, 'y': -0.07}
+                    text: str(app.litigation_count4)
+                    font_size: '25dp'
+
+                Label:
+                    pos_hint: {'x': 0, 'y': -0.15}
+                    text: 'Low Litigation Associated'
+                
+
+                Button:
+                    background_color:  (0.058823529, 0.458823529, 0.741176471, 1)
+                    background_normal: ''
+                    size_hint: (1, 0.05)
+                    pos_hint: {'x': 0, 'y': 0}
+                    text: 'Return'
+                    on_release: manager.current = 'evidence'
+
+
+
+
+
+
+
+            Screen:
                 name: 'evidence'
                 FloatLayout:
                     rows: 15
@@ -499,10 +939,11 @@
                             size: self.size
 
                     Carousel:
+                        size_hint: (1.25,0.90)
+                        pos_hint: {'x': -.12, 'y': 0}
                         id: cad1
                         fullscreen: True
                         loop: True
-                 
 
                         Screen:
                             name: 'res1'
@@ -535,7 +976,6 @@
                                 font_size: '18dp'
                                 bold: True
 
-
                             Label:
                                 pos_hint: {'x': 0, 'y': .25}
                                 markup: True
@@ -545,16 +985,40 @@
                                 font_size: '8dp'
 
                             Button:
-                                pos_hint: {'x': .2, 'y': 0.1}
-                                size_hint: (0.6, 0.05)
+                                pos_hint: {'x': .2, 'y': 0.157}
+                                size_hint: (0.3, 0.05)
                                 background_normal: ''
                                 background_color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725,1)
-                                text: 'Save this patent'
+                                text: 'Analytics'
                                 font_size: '8dp'
+                                on_release: manager.current = 'POO'
+
+                            Button:
+                                pos_hint: {'x': .5, 'y': 0.157}
+                                size_hint: (0.3, 0.05)
+                                background_normal: ''
+                                background_color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725,1)
+                                text: 'Get Litigation'
+                                font_size: '8dp'
+                                on_release: manager.current = 'POO'
 
 
+                            Button:
+                                pos_hint: {'x': .2, 'y': 0.1}
+                                size_hint: (0.3, 0.05)
+                                background_normal: ''
+                                background_color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725,1)
+                                text: 'Contact Owner'
+                                font_size: '8dp'
+                                on_release: manager.current = "CONT"
 
-
+                            Button:
+                                pos_hint: {'x': .5, 'y': 0.1}
+                                size_hint: (0.3, 0.05)
+                                background_normal: ''
+                                background_color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725,1)
+                                text: 'Email Patent'
+                                font_size: '8dp'
 
                         Screen:
                             name: 'res2'
@@ -566,6 +1030,7 @@
                                     Rectangle:
                                         pos: self.pos
                                         size: self.size
+
                             Label:
                                 font_name: 'assets/Roboto-Light.ttf'
                                 pos_hint: {'x': 0, 'y': 0.4}
@@ -596,13 +1061,58 @@
                                 text: app.search1
                                 font_size: '8dp'
 
+
+
                             Button:
-                                pos_hint: {'x': .2, 'y': 0.1}
-                                size_hint: (0.6, 0.05)
+                                pos_hint: {'x': .2, 'y': 0.157}
+                                size_hint: (0.3, 0.05)
                                 background_normal: ''
                                 background_color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725,1)
-                                text: 'Save this patent'
+                                text: 'Analytics'
                                 font_size: '8dp'
+                                on_release: manager.current = 'POO1'
+
+                            Button:
+                                pos_hint: {'x': .5, 'y': 0.157}
+                                size_hint: (0.3, 0.05)
+                                background_normal: ''
+                                background_color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725,1)
+                                text: 'Get Litigation'
+                                font_size: '8dp'
+                                on_release: manager.current = 'POO1'
+
+
+                            Button:
+                                pos_hint: {'x': .2, 'y': 0.1}
+                                size_hint: (0.3, 0.05)
+                                background_normal: ''
+                                background_color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725,1)
+                                text: 'Contact Owner'
+                                font_size: '8dp'
+                                on_release: manager.current = "CONT1"
+
+                            Button:
+                                pos_hint: {'x': .5, 'y': 0.1}
+                                size_hint: (0.3, 0.05)
+                                background_normal: ''
+                                background_color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725,1)
+                                text: 'Email Patent'
+                                font_size: '8dp'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
                         Screen:
@@ -636,7 +1146,6 @@
                                 font_size: '18dp'
                                 bold: True
 
-
                             Label:
                                 pos_hint: {'x': 0, 'y': .25}
                                 markup: True
@@ -645,13 +1154,51 @@
                                 text: app.search2
                                 font_size: '8dp'
 
+
+
                             Button:
-                                pos_hint: {'x': .2, 'y': 0.1}
-                                size_hint: (0.6, 0.05)
+                                pos_hint: {'x': .2, 'y': 0.157}
+                                size_hint: (0.3, 0.05)
                                 background_normal: ''
                                 background_color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725,1)
-                                text: 'Save this patent'
+                                text: 'Analytics'
                                 font_size: '8dp'
+                                on_release: manager.current = 'POO2'
+
+                            Button:
+                                pos_hint: {'x': .5, 'y': 0.157}
+                                size_hint: (0.3, 0.05)
+                                background_normal: ''
+                                background_color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725,1)
+                                text: 'Get Litigation'
+                                font_size: '8dp'
+                                on_release: manager.current = 'POO2'
+
+
+                            Button:
+                                pos_hint: {'x': .2, 'y': 0.1}
+                                size_hint: (0.3, 0.05)
+                                background_normal: ''
+                                background_color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725,1)
+                                text: 'Contact Owner'
+                                font_size: '8dp'
+                                on_release: manager.current = "CONT2"
+
+                            Button:
+                                pos_hint: {'x': .5, 'y': 0.1}
+                                size_hint: (0.3, 0.05)
+                                background_normal: ''
+                                background_color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725,1)
+                                text: 'Email Patent'
+                                font_size: '8dp'
+
+
+
+
+
+
+
+
 
 
 
@@ -697,12 +1244,47 @@
                                 font_size: '8dp'
 
                             Button:
-                                pos_hint: {'x': .2, 'y': 0.1}
-                                size_hint: (0.6, 0.05)
+                                pos_hint: {'x': .2, 'y': 0.157}
+                                size_hint: (0.3, 0.05)
                                 background_normal: ''
                                 background_color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725,1)
-                                text: 'Save this patent'
+                                text: 'Analytics'
                                 font_size: '8dp'
+                                on_release: manager.current = 'POO3'
+
+                            Button:
+                                pos_hint: {'x': .5, 'y': 0.157}
+                                size_hint: (0.3, 0.05)
+                                background_normal: ''
+                                background_color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725,1)
+                                text: 'Get Litigation'
+                                font_size: '8dp'
+                                on_release: manager.current = 'POO3'
+
+
+                            Button:
+                                pos_hint: {'x': .2, 'y': 0.1}
+                                size_hint: (0.3, 0.05)
+                                background_normal: ''
+                                background_color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725,1)
+                                text: 'Contact Owner'
+                                font_size: '8dp'
+                                on_release: manager.current = "CONT3"
+
+                            Button:
+                                pos_hint: {'x': .5, 'y': 0.1}
+                                size_hint: (0.3, 0.05)
+                                background_normal: ''
+                                background_color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725,1)
+                                text: 'Email Patent'
+                                font_size: '8dp'
+
+
+
+
+
+
+
 
                         Screen:
                             name: 'res5'
@@ -714,6 +1296,7 @@
                                     Rectangle:
                                         pos: self.pos
                                         size: self.size
+
                             Label:
                                 font_name: 'assets/Roboto-Light.ttf'
                                 pos_hint: {'x': 0, 'y': 0.4}
@@ -736,20 +1319,73 @@
                                 bold: True
 
                             Label:
-                                pos_hint: {'x': 0, 'y': .25}
+                                pos_hint: {'x': 0, 'y': .3}
                                 markup: True
                                 text_size: (self.size[0] * .6, self.size[1])
                                 bold: True
                                 text: app.search4
+                                font_size: '7dp'
+
+
+
+                            Button:
+                                pos_hint: {'x': .2, 'y': 0.157}
+                                size_hint: (0.3, 0.05)
+                                background_normal: ''
+                                background_color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725,1)
+                                text: 'Analytics'
                                 font_size: '8dp'
+                                on_release: manager.current = 'POO4'
+
+                            Button:
+                                pos_hint: {'x': .5, 'y': 0.157}
+                                size_hint: (0.3, 0.05)
+                                background_normal: ''
+                                background_color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725,1)
+                                text: 'Get Litigation'
+                                font_size: '8dp'
+                                on_release: manager.current = 'POO4'
+
 
                             Button:
                                 pos_hint: {'x': .2, 'y': 0.1}
-                                size_hint: (0.6, 0.05)
+                                size_hint: (0.3, 0.05)
                                 background_normal: ''
                                 background_color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725,1)
-                                text: 'Save this patent'
+                                text: 'Contact Owner'
                                 font_size: '8dp'
+                                on_release: manager.current = "CONT4"
+
+                            Button:
+                                pos_hint: {'x': .5, 'y': 0.1}
+                                size_hint: (0.3, 0.05)
+                                background_normal: ''
+                                background_color: (0.8784313725490196, 0.4196078431372549, 0.14901960784313725,1)
+                                text: 'Email Patent'
+                                font_size: '8dp'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                    Label:
+                        markup: True
+                        pos_hint: {'x': 0, 'y': .41}
+                        bold: True
+                        text: "Patent Results"
+                        font_size: '25dp'
 
                     Button:
                         background_color:  (0.058823529, 0.458823529, 0.741176471, 1)
@@ -770,11 +1406,15 @@
                             pos: self.pos
                             size: self.size
 
+                    Label:
+                        pos_hint: {'x': 0, 'y': .45}
+                        text: "aw"
+                        font_size: '50dp'
+
                     Carousel:
                         id: cad
                         fullscreen: True
                         loop: True
-
                         Label:
                             color:(0,0,0,1)
                             pos_hint: {'x': 0, 'y': .25}
@@ -862,14 +1502,12 @@
             Screen:
                 name: 'settings'
                 FloatLayout:
-                    rows: 15
                     canvas.before:
                         Color:
                             rgb: (0.952941176,0.949019608,0.933333333)
                         Rectangle:
                             pos: self.pos
                             size: self.size
-
                     Label:
                         font_name: 'assets/timeburner_regular.ttf'
                         color: (0,0,0, 1)

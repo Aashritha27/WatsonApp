@@ -1,0 +1,14 @@
+I can pull a random feature out of the hat.
+    Vi can hand me a hat with features, and I can pull 2 out.
+    It's kind of exciting to see things be random, better
+    than me saying "okay these are the exact features I'm picking"
+
+    -easy, adds interest to demo, more impressive, fast. 
+
+add some analytics and shit.
+    swagg
+
+add ability to repeat searhc
+    one search of 5 results might seem constrained.
+
+    -button of "get more results
