@@ -39,6 +39,7 @@ from kivy.properties import  ObjectProperty
 #import urllib
 # patent dictionary
 from patents import *
+from send_email import send_mail
 
 #endpoint = 'http://calwatson.herokuapp.com/question'
 #my_token = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6Im9za2lfYmVhciIsInBhc3N3b3JkIjoicGFzc3dvcmQ3In0.I8Z0BPvf_9sb9kp19Tek1ZxC50Im1YebB-TE3Oc6Rps'
@@ -163,11 +164,12 @@ class AndroidApp(App):
     local_search_term = ListProperty()
     confidence = NumericProperty()
 
-    litigation_count0 = NumericProperty()
-    litigation_count1 = NumericProperty()
-    litigation_count2 = NumericProperty()
-    litigation_count3 = NumericProperty()
-    litigation_count4 = NumericProperty()
+
+    litigation_count0 = StringProperty()
+    litigation_count1 = StringProperty()
+    litigation_count2 = StringProperty()
+    litigation_count3 = StringProperty()
+    litigation_count4 = StringProperty()
 
     own_name0 = StringProperty()
     own_name1 = StringProperty()
@@ -175,12 +177,30 @@ class AndroidApp(App):
     own_name3 = StringProperty()
     own_name4 = StringProperty()
 
-
     own_num0 = StringProperty()
     own_num1 = StringProperty()
     own_num2 = StringProperty()
     own_num3 = StringProperty()
     own_num4 = StringProperty()
+
+    def mail(self, ID):
+        fromaddr = 'patentfoxibm@gmail.com'
+        toaddr  = 'oski@berkeley.edu'
+        msg = "\r\n".join([
+          "Subject: Your Saved Patent",
+          "",
+            "Hello Oski! \n\n", "You saved a patent using the Patent Fox app.\n",
+            "Here is the link: \n",
+           "https://drive.google.com/viewerng/viewer?url=patentimages.storage.googleapis.com/pdfs/US6477117.pdf"
+           "https://www.google.com/patents/US" + ID
+          ])
+
+        username = 'patentfoxibm@gmail.com'
+        password = 'patentfox123'
+        send_mail(username,password,fromaddr,toaddr,msg)
+
+
+
 
     def login(self, email, password):
         time.sleep(.75)
@@ -267,7 +287,6 @@ class AndroidApp(App):
     def local_query(self,term):
         #set confidence interval
         time.sleep(.5)
-        print(term)
         amount_found = 0
         results = [documents[word] for word in self.patent_traits if word in term]
         self.patent_matches = len(results)
@@ -283,6 +302,7 @@ class AndroidApp(App):
                 if rando not in results:
                     results.append(rando)
                     i-=1
+
 
         self.search_titl0 = "US" + self.getPatentNumber(results[0])
 
@@ -301,9 +321,13 @@ class AndroidApp(App):
         self.search4 = self.getAbstract(results[4])
 
         self.litigation_count0 = self.getLitigations(results[0])
+
         self.litigation_count1 = self.getLitigations(results[1])
+
         self.litigation_count2 = self.getLitigations(results[2])
+
         self.litigation_count3 = self.getLitigations(results[3])
+
         self.litigation_count4 = self.getLitigations(results[4])
 
         self.own_name0 = self.getInventor(results[0])
@@ -317,7 +341,6 @@ class AndroidApp(App):
         self.own_num2 = self.getPhoneNumber(results[2])
         self.own_num3 = self.getPhoneNumber(results[3])
         self.own_num4 = self.getPhoneNumber(results[4])
-
 
         return results
 
